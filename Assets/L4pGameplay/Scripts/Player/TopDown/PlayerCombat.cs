@@ -18,7 +18,7 @@ namespace L4P.Gameplay.Player.TopDown
         }
         private void Awake()
         {
-            currentWeapon = GetComponent<BasicRange>();
+            currentWeapon = GetComponentInChildren<IWeapon>();
         }
     }
 }

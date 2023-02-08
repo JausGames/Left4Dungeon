@@ -13,7 +13,7 @@ namespace L4P.Gameplay.Player.TopDown
         Vector2 move;
 
         [Header("Stats")]
-        private float acceleration = 2f;
+        private float acceleration = .8f;
         private float attackMoveSpeedMultiplier = .2f;
         private float sprintMultiplier = 1.5f;
         private float maxSpeed = 10f;
@@ -62,7 +62,7 @@ namespace L4P.Gameplay.Player.TopDown
             }
 
             var currentSpeed = body.velocity.magnitude;
-            var desiredSpeed = Mathf.Lerp(currentSpeed, targetSpeed, acceleration);
+            var desiredSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration);
 
             body.velocity = direction * desiredSpeed;
         }
