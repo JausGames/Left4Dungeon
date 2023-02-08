@@ -25,6 +25,9 @@ namespace L4P.Gameplay.Player.Controls
 
             InputManager.Controls.Gameplay.Sprint.performed += _ => OnSprint(true);
             InputManager.Controls.Gameplay.Sprint.canceled += _ => OnSprint(false);
+
+            InputManager.Controls.Gameplay.UseWeapon.performed += _ => OnUseWeapon(true);
+            InputManager.Controls.Gameplay.UseWeapon.canceled += _ => OnUseWeapon(false);
         }
         public void OnMove(Vector2 context)
         {
@@ -37,6 +40,12 @@ namespace L4P.Gameplay.Player.Controls
             //Debug.Log(gameObject.ToString() + ", Network Informations : IsLocalPlayer " + IsLocalPlayer);
             //if (motor == null || !IsOwner) return;
             motor.SetSprint(context);
+        }
+        public void OnUseWeapon(bool context)
+        {
+            //Debug.Log(gameObject.ToString() + ", Network Informations : IsLocalPlayer " + IsLocalPlayer);
+            //if (motor == null || !IsOwner) return;
+            combat.UseWeapon(context);
         }
     }
 }
