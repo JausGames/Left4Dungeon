@@ -20,6 +20,7 @@ namespace L4P.Gameplay.Player.TopDown
 
         [Header("Components")]
         [SerializeField] protected Rigidbody body;
+        [SerializeField] protected Transform cameraContainer;
 
         public Vector2 Move { get => move; set => move = value; }
         public float Acceleration { get => acceleration; set => acceleration = value; }
@@ -36,6 +37,7 @@ namespace L4P.Gameplay.Player.TopDown
         private void Update()
         {
             UpdatePlayerPosition();
+            Turning();
         }
 
         public void UpdatePlayerPosition()
@@ -52,7 +54,7 @@ namespace L4P.Gameplay.Player.TopDown
             {
                 targetSpeed *= sprintMultiplier;
             }
-            var direction = new Vector3(move.x, 0f, move.y);
+            var direction = -cameraContainer.forward * move.x + cameraContainer.right * move.y;
             var directionLength = direction.magnitude;
             if (directionLength > 1)
             {
@@ -63,6 +65,31 @@ namespace L4P.Gameplay.Player.TopDown
             var desiredSpeed = Mathf.Lerp(currentSpeed, targetSpeed, acceleration);
 
             body.velocity = direction * desiredSpeed;
+        }
+        void Turning()
+        {
+            // Create a ray from the mouse cursor on screen in the direction of the camera.
+            Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            // Create a RaycastHit variable to store information about what was hit by the ray.
+            RaycastHit floorHit;
+
+            // Perform the raycast and if it hits something on the floor layer...
+            if (Physics.Raycast(camRay, out floorHit))
+            {
+                // Create a vector from the player to the point on the floor the raycast from the mouse hit.
+                Vector3 playerToMouse = floorHit.point - transform.position;
+
+                // Ensure the vector is entirely along the floor plane.
+                playerToMouse.y = 0f;
+
+                // Create a quaternion (rotation) based on looking down the vector from the player to the mouse.
+                Quaternion newRotatation = Quaternion.LookRotation(playerToMouse);
+
+                // Set the player's rotation to this new rotation.
+                transform.rotation = newRotatation;
+                //playerRigidbody.MoveRotation (newRotatation);
+            }
         }
 
         public void SetMove(Vector2 move)
