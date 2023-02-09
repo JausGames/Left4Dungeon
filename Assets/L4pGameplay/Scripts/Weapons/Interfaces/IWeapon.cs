@@ -6,6 +6,7 @@ namespace L4P.Gameplay.Weapons.Interfaces
     public interface IWeapon
     {
         public WeaponStat Stats { get; }
+        public float NextHit { get; }
         public void Use(bool performed);
     }
 
@@ -14,5 +15,6 @@ namespace L4P.Gameplay.Weapons.Interfaces
     {
         public float damage = 10f;
         public float range = 10f;
+        public float cooldown = .7f;
     }
 }

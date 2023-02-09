@@ -12,11 +12,16 @@ namespace L4P.Gameplay.Weapons
         [SerializeField] Transform startingPoint;
         public WeaponStat Stats { get; }
 
+
+        float nextHit = 0f;
+        public float NextHit { get => nextHit; }
+
         public void Use(bool performed)
         {
-            if(performed)
+            if (performed && nextHit <= Time.time)
             {
-                foreach(var prtcl in shotPrtcls) 
+                nextHit = Time.time + stats.cooldown;
+                foreach (var prtcl in shotPrtcls) 
                     prtcl.Play();
 
                 Debug.DrawLine(startingPoint.position, startingPoint.position + startingPoint.forward * stats.range, Color.red, 1f);

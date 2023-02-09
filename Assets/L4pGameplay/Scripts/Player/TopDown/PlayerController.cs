@@ -1,9 +1,10 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using L4P.Gameplay.Player.Animations;
 
 namespace L4P.Gameplay.Player.TopDown
 {
-    [RequireComponent(typeof(Rigidbody), typeof(Animation.PlayerAnimatorController))]
+    [RequireComponent(typeof(PlayerAnimatorController))]
     public class PlayerController : MonoBehaviour, IPlayerController
     {
         [Header("States")]
@@ -21,6 +22,7 @@ namespace L4P.Gameplay.Player.TopDown
         [Header("Components")]
         [SerializeField] protected Rigidbody body;
         [SerializeField] protected Transform cameraContainer;
+        [SerializeField] public PlayerAnimatorController animator;
 
         public Vector2 Move { get => move; set => move = value; }
         public float Acceleration { get => acceleration; set => acceleration = value; }
@@ -32,12 +34,22 @@ namespace L4P.Gameplay.Player.TopDown
 
         private void Awake()
         {
-            body = GetComponent<Rigidbody>();
+            body = GetComponentInChildren<Rigidbody>();
+            animator = GetComponent<PlayerAnimatorController>();
         }
         private void Update()
         {
             UpdatePlayerPosition();
             Turning();
+            Animate();
+        }
+
+        private void Animate()
+        {
+            var direction = -cameraContainer.forward * move.x + cameraContainer.right * move.y;
+            var moveY = Vector3.Dot(direction, body.transform.forward);
+            var moveX = Vector3.Dot(direction, body.transform.right);
+            animator.SetMove(new Vector2(moveX, moveY).normalized);
         }
 
         public void UpdatePlayerPosition()
@@ -78,7 +90,7 @@ namespace L4P.Gameplay.Player.TopDown
             if (Physics.Raycast(camRay, out floorHit))
             {
                 // Create a vector from the player to the point on the floor the raycast from the mouse hit.
-                Vector3 playerToMouse = floorHit.point - transform.position;
+                Vector3 playerToMouse = floorHit.point - body.transform.position;
 
                 // Ensure the vector is entirely along the floor plane.
                 playerToMouse.y = 0f;
@@ -87,7 +99,7 @@ namespace L4P.Gameplay.Player.TopDown
                 Quaternion newRotatation = Quaternion.LookRotation(playerToMouse);
 
                 // Set the player's rotation to this new rotation.
-                transform.rotation = newRotatation;
+                body.transform.rotation = newRotatation;
                 //playerRigidbody.MoveRotation (newRotatation);
             }
         }
