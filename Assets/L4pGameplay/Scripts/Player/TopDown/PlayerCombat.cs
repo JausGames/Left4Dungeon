@@ -11,27 +11,40 @@ namespace L4P.Gameplay.Player.TopDown
     {
         [SerializeField] public PlayerAnimatorController animator;
 
-        private IWeapon currentWeapon;
-        public IWeapon CurrentWeapon { get => currentWeapon; }
+        [SerializeField] private Weapon currentRightHand;
+        public Weapon CurrentRightHand { get => currentRightHand; }
 
-        public bool useWeapon = false;
+        [SerializeField] private Weapon currentLeftHand;
+        public Weapon CurrentLeftHand { get => currentLeftHand; }
 
-        public void UseWeapon(bool performed)
+        private bool useWeapon = false;
+        private bool isRightHand = true;
+
+        public void UseWeapon(bool performed, bool isRightHand)
         {
+            this.isRightHand = isRightHand;
             useWeapon = performed;
-            currentWeapon.Use(performed);
+            Weapon weapon = isRightHand ? currentRightHand : currentLeftHand;
+            weapon.Use(performed);
             animator.SetAttackAnimation(performed);
         }
         private void Update()
         {
-            if(useWeapon && currentWeapon.NextHit <= Time.time)
+            if(useWeapon)
             {
-                currentWeapon.Use(true);
+                if (isRightHand && currentRightHand.NextHit <= Time.time)
+                {
+                    currentRightHand.Use(true);
+                }
+                else if (!isRightHand && currentRightHand.NextHit <= Time.time)
+                {
+                    currentLeftHand.Use(true);
+                }
             }
         }
         private void Awake()
         {
-            currentWeapon = GetComponentInChildren<IWeapon>();
+            //currentWeapon = GetComponentInChildren<IWeapon>();
             animator = GetComponent<PlayerAnimatorController>();
         }
     }

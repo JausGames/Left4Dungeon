@@ -7,7 +7,8 @@ namespace L4P.Gameplay.Player
 {
     public interface IPlayerCombat
     {
-        public IWeapon CurrentWeapon { get; }
-        public void UseWeapon(bool performed);
+        public Weapon CurrentRightHand { get; }
+        public Weapon CurrentLeftHand { get; }
+        public void UseWeapon(bool performed, bool isRightHand);
     }
 }

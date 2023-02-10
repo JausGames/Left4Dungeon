@@ -4,29 +4,27 @@ using L4P.Gameplay.Enemy;
 
 namespace L4P.Gameplay.Weapons
 {
-    public class RaycastRange : MonoBehaviour, IWeapon
+    public class RaycastRange : Weapon
     {
         [SerializeField] LayerMask ennemyLayer;
-        [SerializeField] WeaponStat stats = null;
         [SerializeField] ParticleSystem[] shotPrtcls;
         [SerializeField] Transform startingPoint;
-        public WeaponStat Stats { get; }
-
-
-        float nextHit = 0f;
-        public float NextHit { get => nextHit; }
-
-        public void Use(bool performed)
+        private void Awake()
         {
-            if (performed && nextHit <= Time.time)
+            owner = GetComponentInParent<Animator>().transform;
+        }
+        public override void Use(bool performed)
+        {
+            if (performed && NextHit <= Time.time)
             {
-                nextHit = Time.time + stats.cooldown;
+                NextHit = Time.time + stats.cooldown;
+                startingPoint.rotation = owner.rotation;
                 foreach (var prtcl in shotPrtcls) 
                     prtcl.Play();
 
                 Debug.DrawLine(startingPoint.position, startingPoint.position + startingPoint.forward * stats.range, Color.red, 1f);
 
-                if (Physics.Raycast(startingPoint.position, startingPoint.forward, out var contactHit, stats.range, ennemyLayer))
+                if (Physics.Raycast(startingPoint.position, owner.forward, out var contactHit, stats.range, ennemyLayer))
                 {
                     var victim = contactHit.collider.attachedRigidbody.GetComponent<Hitable>();
                     if (victim)

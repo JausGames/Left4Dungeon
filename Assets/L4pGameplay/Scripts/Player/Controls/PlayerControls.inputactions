@@ -24,9 +24,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "UseWeapon",
+                    "name": "UseLeft",
                     "type": "Button",
                     "id": "c860fba8-b838-4867-9c14-f3dff70206bd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseRight",
+                    "type": "Button",
+                    "id": "440cef0d-46c7-4a28-9c68-8445c6958ef3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -107,7 +116,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "UseWeapon",
+                    "action": "UseLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "11411eb8-1ac1-4be6-aec2-52e6ee006f01",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "UseRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -121,6 +141,11 @@
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }

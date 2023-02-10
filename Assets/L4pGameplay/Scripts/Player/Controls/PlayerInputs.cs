@@ -26,8 +26,11 @@ namespace L4P.Gameplay.Player.Controls
             InputManager.Controls.Gameplay.Sprint.performed += _ => OnSprint(true);
             InputManager.Controls.Gameplay.Sprint.canceled += _ => OnSprint(false);
 
-            InputManager.Controls.Gameplay.UseWeapon.performed += _ => OnUseWeapon(true);
-            InputManager.Controls.Gameplay.UseWeapon.canceled += _ => OnUseWeapon(false);
+            InputManager.Controls.Gameplay.UseLeft.performed += _ => OnUseWeapon(true, false);
+            InputManager.Controls.Gameplay.UseLeft.canceled += _ => OnUseWeapon(false, false);
+
+            InputManager.Controls.Gameplay.UseRight.performed += _ => OnUseWeapon(true, true);
+            InputManager.Controls.Gameplay.UseRight.canceled += _ => OnUseWeapon(false, true);
         }
         public void OnMove(Vector2 context)
         {
@@ -41,11 +44,11 @@ namespace L4P.Gameplay.Player.Controls
             //if (motor == null || !IsOwner) return;
             motor.SetSprint(context);
         }
-        public void OnUseWeapon(bool context)
+        public void OnUseWeapon(bool context, bool isRightHand)
         {
             //Debug.Log(gameObject.ToString() + ", Network Informations : IsLocalPlayer " + IsLocalPlayer);
             //if (motor == null || !IsOwner) return;
-            combat.UseWeapon(context);
+            combat.UseWeapon(context, isRightHand);
         }
     }
 }

@@ -46,9 +46,18 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""UseWeapon"",
+                    ""name"": ""UseLeft"",
                     ""type"": ""Button"",
                     ""id"": ""c860fba8-b838-4867-9c14-f3dff70206bd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""440cef0d-46c7-4a28-9c68-8445c6958ef3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -129,7 +138,18 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""UseWeapon"",
+                    ""action"": ""UseLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11411eb8-1ac1-4be6-aec2-52e6ee006f01"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""UseRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -145,6 +165,11 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""devicePath"": ""<Keyboard>"",
                     ""isOptional"": false,
                     ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
                 }
             ]
         }
@@ -154,7 +179,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
-        m_Gameplay_UseWeapon = m_Gameplay.FindAction("UseWeapon", throwIfNotFound: true);
+        m_Gameplay_UseLeft = m_Gameplay.FindAction("UseLeft", throwIfNotFound: true);
+        m_Gameplay_UseRight = m_Gameplay.FindAction("UseRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -216,14 +242,16 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_Sprint;
-    private readonly InputAction m_Gameplay_UseWeapon;
+    private readonly InputAction m_Gameplay_UseLeft;
+    private readonly InputAction m_Gameplay_UseRight;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
         public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
         public InputAction @Sprint => m_Wrapper.m_Gameplay_Sprint;
-        public InputAction @UseWeapon => m_Wrapper.m_Gameplay_UseWeapon;
+        public InputAction @UseLeft => m_Wrapper.m_Gameplay_UseLeft;
+        public InputAction @UseRight => m_Wrapper.m_Gameplay_UseRight;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -239,9 +267,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Sprint.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSprint;
                 @Sprint.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSprint;
                 @Sprint.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSprint;
-                @UseWeapon.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseWeapon;
-                @UseWeapon.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseWeapon;
-                @UseWeapon.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseWeapon;
+                @UseLeft.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseLeft;
+                @UseLeft.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseLeft;
+                @UseLeft.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseLeft;
+                @UseRight.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseRight;
+                @UseRight.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseRight;
+                @UseRight.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseRight;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -252,9 +283,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
-                @UseWeapon.started += instance.OnUseWeapon;
-                @UseWeapon.performed += instance.OnUseWeapon;
-                @UseWeapon.canceled += instance.OnUseWeapon;
+                @UseLeft.started += instance.OnUseLeft;
+                @UseLeft.performed += instance.OnUseLeft;
+                @UseLeft.canceled += instance.OnUseLeft;
+                @UseRight.started += instance.OnUseRight;
+                @UseRight.performed += instance.OnUseRight;
+                @UseRight.canceled += instance.OnUseRight;
             }
         }
     }
@@ -272,6 +306,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
-        void OnUseWeapon(InputAction.CallbackContext context);
+        void OnUseLeft(InputAction.CallbackContext context);
+        void OnUseRight(InputAction.CallbackContext context);
     }
 }

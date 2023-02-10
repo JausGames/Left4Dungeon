@@ -46,17 +46,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90abf9a299d2c0845b379b55ec840635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ennemyLayer:
-    serializedVersion: 2
-    m_Bits: 64
   stats:
     damage: 10
     range: 10
     cooldown: 0.7
+  ennemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
   shotPrtcls:
   - {fileID: 173241795366358142}
   - {fileID: 173241796216798865}
-  startingPoint: {fileID: 0}
+  startingPoint: {fileID: 418525209473283495}
 --- !u!1 &173241795366358143
 GameObject:
   m_ObjectHideFlags: 0
