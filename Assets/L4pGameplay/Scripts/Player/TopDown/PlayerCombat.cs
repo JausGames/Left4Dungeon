@@ -8,8 +8,8 @@ namespace L4P.Gameplay.Player.TopDown
     [RequireComponent(typeof(PlayerAnimatorController))]
     public class PlayerCombat : MonoBehaviour, IPlayerCombat
     {
-        [SerializeField] public PlayerAnimatorController animator;
-        [SerializeField] public PlayerAnimatorEvent animatorEvent;
+        PlayerAnimatorController animator;
+        PlayerAnimatorEvent animatorEvent;
 
         [SerializeField] private Weapon currentRightHand;
         public Weapon CurrentRightHand { get => currentRightHand; }
@@ -46,9 +46,13 @@ namespace L4P.Gameplay.Player.TopDown
         {
             //currentWeapon = GetComponentInChildren<IWeapon>();
             animator = GetComponent<PlayerAnimatorController>();
-            animatorEvent = GetComponent<PlayerAnimatorEvent>();
+            animatorEvent = GetComponentInChildren<PlayerAnimatorEvent>();
 
-            //animatorEvent.LeftActivateEvent.AddListener(currentLeftHand)
+            //if (currentLeftHand is MeleeWeapon)
+            //animatorEvent.LeftActivateEvent.AddListener(delegate { ((MeleeWeapon)currentLeftHand).Trigger.IsActive = true; });
+            //animatorEvent.LeftDeactivateEvent.AddListener(delegate { ((MeleeWeapon)currentLeftHand).Trigger.IsActive = false; });
+            animatorEvent.RightActivateEvent.AddListener(delegate { ((MeleeWeapon)currentRightHand).Trigger.IsActive = true; });
+            animatorEvent.RightDeactivateEvent.AddListener(delegate { ((MeleeWeapon)currentRightHand).Trigger.IsActive = false; });
         }
     }
 }

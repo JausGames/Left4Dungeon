@@ -7,10 +7,10 @@ namespace L4P.Gameplay.Player.Animations
 {
     public class PlayerAnimatorEvent : MonoBehaviour
     {
-        UnityEvent leftActivateEvent;
-        UnityEvent leftDeactivateEvent;
-        UnityEvent rightActivateEvent;
-        UnityEvent rightDeactivateEvent;
+        UnityEvent leftActivateEvent = new UnityEvent();
+        UnityEvent leftDeactivateEvent = new UnityEvent();
+        UnityEvent rightActivateEvent = new UnityEvent();
+        UnityEvent rightDeactivateEvent = new UnityEvent();
 
         public UnityEvent LeftActivateEvent { get => leftActivateEvent; }
         public UnityEvent LeftDeactivateEvent { get => leftDeactivateEvent; }
