@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
+using L4P.Gameplay.Player.Animations;
 
-namespace L4P.Gameplay.Weapons.Interfaces
+namespace L4P.Gameplay.Weapons
 {
     abstract public class Weapon : MonoBehaviour
     {
@@ -11,7 +12,13 @@ namespace L4P.Gameplay.Weapons.Interfaces
         float nextHit = 0f;
         [SerializeField] protected Transform owner;
         public float NextHit { get => nextHit; set => nextHit = value; }
-        public abstract void Use(bool performed);
+        public Transform Owner { get => owner; set => owner = value; }
+        private void Awake()
+        {
+            Owner = GetComponentInParent<Animator>().transform;
+        }
+
+        public abstract void Use(bool performed, PlayerAnimatorController playerAnimator);
     }
 
     [System.Serializable]

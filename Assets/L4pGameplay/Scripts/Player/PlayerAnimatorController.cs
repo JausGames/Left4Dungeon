@@ -31,10 +31,20 @@ namespace L4P.Gameplay.Player.Animations
                 var weight = Mathf.MoveTowards(animator.GetLayerWeight(1), 0f, Time.deltaTime * blendSpeed);
                 animator.SetLayerWeight(1, weight);
             }
+
+            //animator.SetLayerWeight(1, 1f);
         }
 
+        public void SetAttackAnimationTrigger(bool performed, int animAttackTriggerId = 1080829965)
+        {
+            if(performed)
+                animator.SetTrigger(animAttackTriggerId);
+            else
+                animator.ResetTrigger(animAttackTriggerId);
+        }
         internal void SetAttackAnimation(bool performed)
         {
+            Debug.Log(Animator.StringToHash("Attack"));
             cast = performed;
             animator.SetBool("Cast", performed);
         }

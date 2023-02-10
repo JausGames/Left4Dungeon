@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using L4P.Gameplay.Weapons.Interfaces;
 using L4P.Gameplay.Weapons;
 using L4P.Gameplay.Player.Animations;
 
@@ -10,6 +9,7 @@ namespace L4P.Gameplay.Player.TopDown
     public class PlayerCombat : MonoBehaviour, IPlayerCombat
     {
         [SerializeField] public PlayerAnimatorController animator;
+        [SerializeField] public PlayerAnimatorEvent animatorEvent;
 
         [SerializeField] private Weapon currentRightHand;
         public Weapon CurrentRightHand { get => currentRightHand; }
@@ -25,8 +25,8 @@ namespace L4P.Gameplay.Player.TopDown
             this.isRightHand = isRightHand;
             useWeapon = performed;
             Weapon weapon = isRightHand ? currentRightHand : currentLeftHand;
-            weapon.Use(performed);
-            animator.SetAttackAnimation(performed);
+            weapon.Use(performed, animator);
+            //animator.SetAttackAnimationTrigger(performed);
         }
         private void Update()
         {
@@ -34,11 +34,11 @@ namespace L4P.Gameplay.Player.TopDown
             {
                 if (isRightHand && currentRightHand.NextHit <= Time.time)
                 {
-                    currentRightHand.Use(true);
+                    currentRightHand.Use(true, animator);
                 }
                 else if (!isRightHand && currentRightHand.NextHit <= Time.time)
                 {
-                    currentLeftHand.Use(true);
+                    currentLeftHand.Use(true, animator);
                 }
             }
         }
@@ -46,6 +46,9 @@ namespace L4P.Gameplay.Player.TopDown
         {
             //currentWeapon = GetComponentInChildren<IWeapon>();
             animator = GetComponent<PlayerAnimatorController>();
+            animatorEvent = GetComponent<PlayerAnimatorEvent>();
+
+            //animatorEvent.LeftActivateEvent.AddListener(currentLeftHand)
         }
     }
 }

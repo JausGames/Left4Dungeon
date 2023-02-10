@@ -1,5 +1,5 @@
 using UnityEngine;
-using L4P.Gameplay.Weapons.Interfaces;
+using L4P.Gameplay.Player.Animations;
 
 
 namespace L4P.Gameplay.Weapons
@@ -11,19 +11,17 @@ namespace L4P.Gameplay.Weapons
         [SerializeField] Transform startingPoint;
         [SerializeField] GameObject bulletPrefab;
 
-        private void Awake()
+        public override void Use(bool performed, PlayerAnimatorController playerAnimator)
         {
-            owner = GetComponentInParent<Animator>().transform;
-        }
-        public override void Use(bool performed)
-        {
+            //do it with hash
+            playerAnimator.SetAttackAnimation(performed);
             if (performed && NextHit <= Time.time)
             {
                 NextHit = Time.time + stats.cooldown;
                 foreach (var prtcl in shotPrtcls)
                     prtcl.Play();
 
-                var bulletObj = Instantiate(bulletPrefab, startingPoint.position, owner.rotation);
+                var bulletObj = Instantiate(bulletPrefab, startingPoint.position, Owner.rotation);
                 var bullet = bulletObj.GetComponent<Bullet>();
                 bullet.SetUp(stats.damage, stats.range, ennemyLayer);
             }

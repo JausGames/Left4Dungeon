@@ -1,21 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-namespace L4P.Gameplay.Player.Animation
+namespace L4P.Gameplay.Player.Animations
 {
     public class PlayerAnimatorEvent : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        UnityEvent leftActivateEvent;
+        UnityEvent leftDeactivateEvent;
+        UnityEvent rightActivateEvent;
+        UnityEvent rightDeactivateEvent;
 
-        }
+        public UnityEvent LeftActivateEvent { get => leftActivateEvent; }
+        public UnityEvent LeftDeactivateEvent { get => leftDeactivateEvent; }
+        public UnityEvent RightActivateEvent { get => rightActivateEvent; }
+        public UnityEvent RightDeactivateEvent { get => rightDeactivateEvent; }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        public void OnActivateRightHand() => rightActivateEvent.Invoke();
+        public void OnDeactivateRightHand() => rightDeactivateEvent.Invoke();
+        public void OnActivateLeftHand() => leftActivateEvent.Invoke();
+        public void OnDeactivateLeftHand() => leftDeactivateEvent.Invoke();
     }
 }

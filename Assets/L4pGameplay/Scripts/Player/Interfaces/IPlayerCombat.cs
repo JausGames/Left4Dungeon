@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using L4P.Gameplay.Weapons.Interfaces;
+using L4P.Gameplay.Weapons;
 
 namespace L4P.Gameplay.Player
 {

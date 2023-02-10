@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 173241795027969429}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.327, y: 1.605, z: 0.45}
-  m_LocalScale: {x: 0.2, y: 0.3, z: 0.2}
+  m_LocalScale: {x: 0.2, y: 0.245865, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 418525209473283495}
@@ -50,6 +50,7 @@ MonoBehaviour:
     damage: 10
     range: 10
     cooldown: 0.7
+  owner: {fileID: 0}
   ennemyLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -9822,7 +9823,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2402164064262204366}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.88, y: 1.5000002, z: -0}
+  m_LocalPosition: {x: -1.05, y: 1.5, z: 0.31}
   m_LocalScale: {x: 5, y: 5, z: 3.3333323}
   m_ConstrainProportionsScale: 0
   m_Children:
