@@ -9,11 +9,20 @@ namespace L4P.Gameplay.Player.Animations
     {
         [SerializeField] Animator animator;
         [SerializeField] float blendSpeed = 4f;
-        [SerializeField] bool cast = false;
+        [SerializeField] bool castL = false;
+        [SerializeField] bool castR = false;
 
         Vector2 move;
 
         public void SetMove(Vector2 move) => this.move = move;
+        private void Awake()
+        {
+
+            Debug.Log("AttackL = " + Animator.StringToHash("AttackL"));
+            Debug.Log("AttackR = " + Animator.StringToHash("AttackR"));
+            Debug.Log("CastL = " + Animator.StringToHash("CastL"));
+            Debug.Log("CastR = " + Animator.StringToHash("CastR"));
+        }
         private void Update()
         {
             var newX = Mathf.MoveTowards(animator.GetFloat("MoveX"), move.x, Time.deltaTime * blendSpeed);
@@ -21,18 +30,31 @@ namespace L4P.Gameplay.Player.Animations
             animator.SetFloat("MoveX", newX);
             animator.SetFloat("MoveY", newY);
 
-            if(cast && animator.GetLayerWeight(1) != 1f)
-            {
-                var weight = Mathf.MoveTowards(animator.GetLayerWeight(1), 1f, Time.deltaTime * blendSpeed);
-                animator.SetLayerWeight(1, weight);
-            }
-            else if (!cast && animator.GetLayerWeight(1) != 0f)
-            {
-                var weight = Mathf.MoveTowards(animator.GetLayerWeight(1), 0f, Time.deltaTime * blendSpeed);
-                animator.SetLayerWeight(1, weight);
-            }
+            ManageBooleanLayer((castL && !castR) || (!castL && castR), 1);
+            ManageBooleanLayer(castL && castR, 2);
+            ManageBooleanLayer(castR && castL, 3);
 
-            //animator.SetLayerWeight(1, 1f);
+        }
+
+        private void ManageBooleanLayer(bool cast, int layerId)
+        {
+            if (cast && animator.GetLayerWeight(layerId) != 1f)
+            {
+                var weight = Mathf.MoveTowards(animator.GetLayerWeight(layerId), 1f, Time.deltaTime * blendSpeed);
+                animator.SetLayerWeight(layerId, weight);
+            }
+            else if (!cast && animator.GetLayerWeight(layerId) != 0f)
+            {
+                var weight = Mathf.MoveTowards(animator.GetLayerWeight(layerId), 0f, Time.deltaTime * blendSpeed);
+                animator.SetLayerWeight(layerId, weight);
+            }
+        }
+
+        internal void SetAttackAnimationBool(bool performed, bool isRight ,int animAttackBoolId = 1080829965)
+        {
+            if (isRight) castR = performed;
+            else castL = performed;
+            animator.SetBool(animAttackBoolId, performed);
         }
 
         public void SetAttackAnimationTrigger(bool performed, int animAttackTriggerId = 1080829965)
@@ -41,12 +63,6 @@ namespace L4P.Gameplay.Player.Animations
                 animator.SetTrigger(animAttackTriggerId);
             else
                 animator.ResetTrigger(animAttackTriggerId);
-        }
-        internal void SetAttackAnimation(bool performed)
-        {
-            Debug.Log(Animator.StringToHash("Attack"));
-            cast = performed;
-            animator.SetBool("Cast", performed);
         }
     }
 }

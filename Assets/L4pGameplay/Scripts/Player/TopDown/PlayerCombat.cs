@@ -17,26 +17,31 @@ namespace L4P.Gameplay.Player.TopDown
         [SerializeField] private Weapon currentLeftHand;
         public Weapon CurrentLeftHand { get => currentLeftHand; }
 
-        private bool useWeapon = false;
+        private bool useLeftWeapon = false;
+        private bool useRightWeapon = false;
         private bool isRightHand = true;
 
         public void UseWeapon(bool performed, bool isRightHand)
         {
             this.isRightHand = isRightHand;
-            useWeapon = performed;
+            if (isRightHand) useRightWeapon = performed;
+            else useLeftWeapon = performed;
             Weapon weapon = isRightHand ? currentRightHand : currentLeftHand;
             weapon.Use(performed, animator);
             //animator.SetAttackAnimationTrigger(performed);
         }
         private void Update()
         {
-            if(useWeapon)
+            if (useRightWeapon)
             {
-                if (isRightHand && currentRightHand.NextHit <= Time.time)
+                if (currentRightHand.NextHit <= Time.time)
                 {
                     currentRightHand.Use(true, animator);
                 }
-                else if (!isRightHand && currentRightHand.NextHit <= Time.time)
+            }
+            if(useLeftWeapon)
+            {
+                if (!isRightHand && currentLeftHand.NextHit <= Time.time)
                 {
                     currentLeftHand.Use(true, animator);
                 }
