@@ -11,11 +11,12 @@ namespace L4P.Gameplay.Player.TopDown
         private bool sprinting;
 
         [Header("Inputs")]
-        Vector2 move;
+        private float rotationSpeed = 10f;
+        [SerializeField] Vector2 move;
 
         [Header("Stats")]
         private float acceleration = .8f;
-        private float attackMoveSpeedMultiplier = .2f;
+        private float attackMoveSpeedMultiplier = .1f;
         private float sprintMultiplier = 1.5f;
         private float maxSpeed = 10f;
 
@@ -23,6 +24,8 @@ namespace L4P.Gameplay.Player.TopDown
         [SerializeField] protected Rigidbody body;
         [SerializeField] protected Transform cameraContainer;
         [SerializeField] public PlayerAnimatorController animator;
+        [SerializeField] public PlayerAnimatorEvent animatorEvent;
+        private bool isAttacking;
 
         public Vector2 Move { get => move; set => move = value; }
         public float Acceleration { get => acceleration; set => acceleration = value; }
@@ -35,9 +38,12 @@ namespace L4P.Gameplay.Player.TopDown
         private void Awake()
         {
             body = GetComponentInChildren<Rigidbody>();
-            animator = GetComponent<PlayerAnimatorController>();
+            animator = GetComponent<PlayerAnimatorController>(); 
+            animatorEvent = GetComponentInChildren<PlayerAnimatorEvent>(); 
+            animatorEvent.IsAttacking.AddListener(delegate { isAttacking = true; });
+            animatorEvent.IsNotAttacking.AddListener(delegate { isAttacking = false; });
         }
-        private void Update()
+        private void FixedUpdate()
         {
             UpdatePlayerPosition();
             Turning();
@@ -54,11 +60,8 @@ namespace L4P.Gameplay.Player.TopDown
 
         public void UpdatePlayerPosition()
         {
-            //find if attacking
-            var attacking = false;
-
             var targetSpeed = maxSpeed;
-            if (attacking)
+            if (isAttacking)
             {
                 targetSpeed *= attackMoveSpeedMultiplier;
             }
@@ -86,6 +89,12 @@ namespace L4P.Gameplay.Player.TopDown
             // Create a RaycastHit variable to store information about what was hit by the ray.
             RaycastHit floorHit;
 
+            var targetSpeed = rotationSpeed;
+            if (isAttacking)
+            {
+                targetSpeed *= attackMoveSpeedMultiplier;
+            }
+
             // Perform the raycast and if it hits something on the floor layer...
             if (Physics.Raycast(camRay, out floorHit))
             {
@@ -99,7 +108,7 @@ namespace L4P.Gameplay.Player.TopDown
                 Quaternion newRotatation = Quaternion.LookRotation(playerToMouse);
 
                 // Set the player's rotation to this new rotation.
-                body.transform.rotation = newRotatation;
+                body.transform.rotation = Quaternion.RotateTowards(body.transform.rotation, newRotatation, targetSpeed);
                 //playerRigidbody.MoveRotation (newRotatation);
             }
         }

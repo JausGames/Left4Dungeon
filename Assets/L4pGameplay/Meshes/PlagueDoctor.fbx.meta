@@ -549,6 +549,13 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.005509832
+        functionName: OnIsAttacking
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.15047021
         functionName: OnActivateLeftHand
         data: 
@@ -586,6 +593,13 @@ ModelImporter:
         messageOptions: 0
       - time: 0.7514231
         functionName: OnDeactivateLeftHand
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9936709
+        functionName: OnIsNotAttacking
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
@@ -707,6 +721,13 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.018735362
+        functionName: OnIsAttacking
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.17639522
         functionName: OnActivateRightHand
         data: 
@@ -744,6 +765,13 @@ ModelImporter:
         messageOptions: 0
       - time: 0.73430616
         functionName: OnDeactivateRightHand
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9705139
+        functionName: OnIsNotAttacking
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0

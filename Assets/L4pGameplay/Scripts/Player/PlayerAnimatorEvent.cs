@@ -7,6 +7,8 @@ namespace L4P.Gameplay.Player.Animations
 {
     public class PlayerAnimatorEvent : MonoBehaviour
     {
+        UnityEvent isAttacking = new UnityEvent();
+        UnityEvent isNotAttacking = new UnityEvent();
         UnityEvent leftActivateEvent = new UnityEvent();
         UnityEvent leftDeactivateEvent = new UnityEvent();
         UnityEvent rightActivateEvent = new UnityEvent();
@@ -16,6 +18,11 @@ namespace L4P.Gameplay.Player.Animations
         public UnityEvent LeftDeactivateEvent { get => leftDeactivateEvent; }
         public UnityEvent RightActivateEvent { get => rightActivateEvent; }
         public UnityEvent RightDeactivateEvent { get => rightDeactivateEvent; }
+        public UnityEvent IsAttacking { get => isAttacking; set => isAttacking = value; }
+        public UnityEvent IsNotAttacking { get => isNotAttacking; set => isNotAttacking = value; }
+
+        public void OnIsAttacking() => IsAttacking.Invoke();
+        public void OnIsNotAttacking() => IsNotAttacking.Invoke();
 
         public void OnActivateRightHand() => rightActivateEvent.Invoke();
         public void OnDeactivateRightHand() => rightDeactivateEvent.Invoke();
