@@ -13,24 +13,61 @@ namespace L4P.Gameplay.Player.Animations
         [SerializeField] bool castR = false;
 
         Vector2 move;
+        [SerializeField] AnimationCurve rootMotionCurve;
+        [SerializeField] AnimationClipRootMotionData currentRootMotionData = new AnimationClipRootMotionData();
 
         PlayerAnimatorEvent animatorEvent;
         private bool isAttacking;
+        [SerializeField] private bool root;
+        private float timeRoot;
+        private Rigidbody body;
+
         public void SetMove(Vector2 move) => this.move = move;
         private void Awake()
         {
+            body = GetComponentInChildren<Rigidbody>();
             animatorEvent = GetComponentInChildren<PlayerAnimatorEvent>();
 
             animatorEvent.IsAttacking.AddListener(delegate { isAttacking = true; });
             animatorEvent.IsNotAttacking.AddListener(delegate { isAttacking = false; });
+
+            animatorEvent.RootMotionActivateEvent.AddListener(
+                delegate
+                {
+                    //SetRootMotion(true);
+                }
+            );
+            animatorEvent.RootMotionDeactivateEvent.AddListener(
+                delegate
+                {
+                    //SetRootMotion(false);
+                }
+            );
 
             Debug.Log("AnimHash : AttackL = " + Animator.StringToHash("AttackL"));
             Debug.Log("AnimHash : AttackR = " + Animator.StringToHash("AttackR"));
             Debug.Log("AnimHash : CastL = " + Animator.StringToHash("CastL"));
             Debug.Log("AnimHash : CastR = " + Animator.StringToHash("CastR"));
         }
+
+        public void SetRootMotion(bool value)
+        {
+            root = value;
+            timeRoot = Time.time;
+        }
+
         private void Update()
         {
+            if (root)
+            {
+                var speed = currentRootMotionData.speed;
+                var curve = currentRootMotionData.curve;
+                var passedTime = Time.time - timeRoot;
+
+
+                body.transform.position += body.transform.forward * (curve.Evaluate(passedTime * speed) - curve.Evaluate((passedTime - Time.deltaTime) * speed));
+            }
+
             if (isAttacking)
             {
                 if (animator.GetLayerWeight(1) > 0f) ManageBooleanLayer(false, 1);
@@ -50,6 +87,44 @@ namespace L4P.Gameplay.Player.Animations
             }
 
 
+
+
+        }
+
+        public void OnAnimationChange(AnimationClip clip, float speed)
+        {
+            //var clip = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
+
+            var curveBindings = UnityEditor.AnimationUtility.GetCurveBindings(clip);
+
+            //var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            
+            currentRootMotionData.length = clip.length;
+            currentRootMotionData.speed = speed;
+
+
+                foreach (var curveBinding in curveBindings)
+                {
+                    //if (curveBinding.propertyName.Contains("RootT.x")) boneCurves[0].curve[0] = UnityEditor.AnimationUtility.GetEditorCurve(clip, curveBinding);
+                    //if (curveBinding.propertyName.Contains("RootT.y")) boneCurves[0].curve[1] = UnityEditor.AnimationUtility.GetEditorCurve(clip, curveBinding);
+                    if (curveBinding.propertyName.Contains("RootT.z")) currentRootMotionData.curve = UnityEditor.AnimationUtility.GetEditorCurve(clip, curveBinding);
+                    //if (curveBinding.propertyName.Contains("RootQ.x")) boneCurves[0].curve[3] = UnityEditor.AnimationUtility.GetEditorCurve(clip, curveBinding);
+                    //if (curveBinding.propertyName.Contains("RootQ.y")) boneCurves[0].curve[4] = UnityEditor.AnimationUtility.GetEditorCurve(clip, curveBinding);
+                    //if (curveBinding.propertyName.Contains("RootQ.z")) boneCurves[0].curve[5] = UnityEditor.AnimationUtility.GetEditorCurve(clip, curveBinding);
+                    //if (curveBinding.propertyName.Contains("RootQ.w")) boneCurves[0].curve[6] = UnityEditor.AnimationUtility.GetEditorCurve(clip, curveBinding);
+                }
+        }
+        public AnimationClip FindAnimation(string name)
+        {
+            foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip.name == name)
+                {
+                    return clip;
+                }
+            }
+
+            return null;
         }
 
         private void ManageBooleanLayer(bool cast, int layerId)
@@ -70,15 +145,23 @@ namespace L4P.Gameplay.Player.Animations
         {
             if (isRight) castR = performed;
             else castL = performed;
+
             animator.SetBool(animAttackBoolId, performed);
         }
 
         public void SetAttackAnimationTrigger(bool performed, int animAttackTriggerId = 1080829965)
         {
-            if(performed)
+            if (performed)
                 animator.SetTrigger(animAttackTriggerId);
             else
                 animator.ResetTrigger(animAttackTriggerId);
         }
+    }
+
+    class AnimationClipRootMotionData
+    {
+        public AnimationCurve curve;
+        public float length;
+        public float speed;
     }
 }
