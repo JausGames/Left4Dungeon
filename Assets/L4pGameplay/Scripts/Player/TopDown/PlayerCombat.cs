@@ -21,8 +21,11 @@ namespace L4P.Gameplay.Player.TopDown
         private bool useRightWeapon = false;
         private bool isRightHand = true;
 
+        private bool isAttacking;
+
         public void UseWeapon(bool performed, bool isRightHand)
         {
+            if (isAttacking && performed) return;
             this.isRightHand = isRightHand;
             if (isRightHand) useRightWeapon = performed;
             else useLeftWeapon = performed;
@@ -53,9 +56,12 @@ namespace L4P.Gameplay.Player.TopDown
             animator = GetComponent<PlayerAnimatorController>();
             animatorEvent = GetComponentInChildren<PlayerAnimatorEvent>();
 
+            animatorEvent.IsAttacking.AddListener(delegate { isAttacking = true; });
+            animatorEvent.IsNotAttacking.AddListener(delegate { isAttacking = false; });
+
             //if (currentLeftHand is MeleeWeapon)
-            //animatorEvent.LeftActivateEvent.AddListener(delegate { ((MeleeWeapon)currentLeftHand).Trigger.IsActive = true; });
-            //animatorEvent.LeftDeactivateEvent.AddListener(delegate { ((MeleeWeapon)currentLeftHand).Trigger.IsActive = false; });
+            animatorEvent.LeftActivateEvent.AddListener(delegate { ((MeleeWeapon)currentLeftHand).Trigger.IsActive = true; });
+            animatorEvent.LeftDeactivateEvent.AddListener(delegate { ((MeleeWeapon)currentLeftHand).Trigger.IsActive = false; });
             animatorEvent.RightActivateEvent.AddListener(delegate { ((MeleeWeapon)currentRightHand).Trigger.IsActive = true; });
             animatorEvent.RightDeactivateEvent.AddListener(delegate { ((MeleeWeapon)currentRightHand).Trigger.IsActive = false; });
         }

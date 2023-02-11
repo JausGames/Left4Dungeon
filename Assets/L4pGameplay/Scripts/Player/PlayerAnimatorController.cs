@@ -14,25 +14,41 @@ namespace L4P.Gameplay.Player.Animations
 
         Vector2 move;
 
+        PlayerAnimatorEvent animatorEvent;
+        private bool isAttacking;
         public void SetMove(Vector2 move) => this.move = move;
         private void Awake()
         {
+            animatorEvent = GetComponentInChildren<PlayerAnimatorEvent>();
 
-            Debug.Log("AttackL = " + Animator.StringToHash("AttackL"));
-            Debug.Log("AttackR = " + Animator.StringToHash("AttackR"));
-            Debug.Log("CastL = " + Animator.StringToHash("CastL"));
-            Debug.Log("CastR = " + Animator.StringToHash("CastR"));
+            animatorEvent.IsAttacking.AddListener(delegate { isAttacking = true; });
+            animatorEvent.IsNotAttacking.AddListener(delegate { isAttacking = false; });
+
+            Debug.Log("AnimHash : AttackL = " + Animator.StringToHash("AttackL"));
+            Debug.Log("AnimHash : AttackR = " + Animator.StringToHash("AttackR"));
+            Debug.Log("AnimHash : CastL = " + Animator.StringToHash("CastL"));
+            Debug.Log("AnimHash : CastR = " + Animator.StringToHash("CastR"));
         }
         private void Update()
         {
-            var newX = Mathf.MoveTowards(animator.GetFloat("MoveX"), move.x, Time.deltaTime * blendSpeed);
-            var newY = Mathf.MoveTowards(animator.GetFloat("MoveY"), move.y, Time.deltaTime * blendSpeed);
-            animator.SetFloat("MoveX", newX);
-            animator.SetFloat("MoveY", newY);
+            if (isAttacking)
+            {
+                if (animator.GetLayerWeight(1) > 0f) ManageBooleanLayer(false, 1);
+                if (animator.GetLayerWeight(2) > 0f) ManageBooleanLayer(false, 2);
+                if (animator.GetLayerWeight(3) > 0f) ManageBooleanLayer(false, 3);
+            }
+            else
+            {
+                var newX = Mathf.MoveTowards(animator.GetFloat("MoveX"), move.x, Time.deltaTime * blendSpeed);
+                var newY = Mathf.MoveTowards(animator.GetFloat("MoveY"), move.y, Time.deltaTime * blendSpeed);
+                animator.SetFloat("MoveX", newX);
+                animator.SetFloat("MoveY", newY);
 
-            ManageBooleanLayer((castL && !castR) || (!castL && castR), 1);
-            ManageBooleanLayer(castL && castR, 2);
-            ManageBooleanLayer(castR && castL, 3);
+                ManageBooleanLayer((castL && !castR) || (!castL && castR), 1);
+                ManageBooleanLayer(castL && castR, 2);
+                ManageBooleanLayer(castR && castL, 3);
+            }
+
 
         }
 
