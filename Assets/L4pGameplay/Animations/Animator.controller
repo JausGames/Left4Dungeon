@@ -1163,7 +1163,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5926095932885924240}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 3236812174063586176}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1174,7 +1175,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: -8875000481628134965, guid: 4bf66dd6544171e44aae0bca81b9d209, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: MoveX
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -1221,7 +1222,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 3641010636707471492}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 5560353503954910985}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1236,6 +1238,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &3236812174063586176
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11530eeacc8ee1c42b830ebabbad52be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: -8875000481628134965, guid: 4bf66dd6544171e44aae0bca81b9d209, type: 3}
+  speed: 2
 --- !u!1101 &3492735023577565955
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1354,6 +1370,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &5560353503954910985
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11530eeacc8ee1c42b830ebabbad52be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 2197104073348359983, guid: 4bf66dd6544171e44aae0bca81b9d209, type: 3}
+  speed: 2
 --- !u!1107 &5636993955661926913
 AnimatorStateMachine:
   serializedVersion: 6

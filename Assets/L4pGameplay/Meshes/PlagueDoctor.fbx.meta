@@ -605,20 +605,6 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0
-        functionName: OnActivateRootMotion
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.98734176
-        functionName: OnDeactivateRootMotion
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -735,14 +721,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.009367681
-        functionName: OnActivateRootMotion
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.018735362
+      - time: 0.025761124
         functionName: OnIsAttacking
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
@@ -793,13 +772,6 @@ ModelImporter:
         messageOptions: 0
       - time: 0.9705139
         functionName: OnIsNotAttacking
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.9493671
-        functionName: OnDeactivateRootMotion
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0

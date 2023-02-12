@@ -15,10 +15,10 @@ namespace L4P.Gameplay.Player.TopDown
         [SerializeField] Vector2 move;
 
         [Header("Stats")]
-        private float acceleration = .8f;
+        private float acceleration = .5f;
         private float attackMoveSpeedMultiplier = .1f;
         private float sprintMultiplier = 1.5f;
-        private float maxSpeed = 10f;
+        private float maxSpeed = 6f;
 
         [Header("Components")]
         [SerializeField] protected Rigidbody body;
