@@ -33,6 +33,8 @@ namespace L4P.Gameplay.Weapons
         public float damage = 10f;
         public float range = 10f;
         public float cooldown = .7f;
+        public float knockback = 1f;
+        public float knockTime = .5f;
     }
 
     public enum Stance

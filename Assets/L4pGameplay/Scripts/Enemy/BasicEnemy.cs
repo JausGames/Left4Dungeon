@@ -16,6 +16,7 @@ namespace L4P.Gameplay.Enemy
         [Space]
         [Header("Hit")]
         [SerializeField] LayerMask enemyLayer;
+        [SerializeField] private float knockoutTime = 0f;
 
         [Space]
         [Header("Componenent")]
@@ -25,7 +26,7 @@ namespace L4P.Gameplay.Enemy
 
         float deadTime = 0f;
         Hitable target;
-        FSM fsm = new FSM();
+        [SerializeField] FSM fsm = new FSM();
         Animator animator;
         AiController controller;
 
@@ -95,18 +96,6 @@ namespace L4P.Gameplay.Enemy
             return result;
         }
 
-        /*void CheckVictim()
-        {
-            var hits = Physics.OverlapSphere(hitStart.position, hitRadius, enemyLayer);
-
-            foreach (var hit in hits)
-            {
-                var hitable = hit.GetComponent<Hitable>() ? hit.GetComponent<Hitable>() : hit.GetComponentInParent<Hitable>();
-                if (hitable)
-                    hitable.TakeDamage(hitDamage);
-            }
-        }*/
-
         private Hitable CheckEnemy()
         {
             var hits = Physics.OverlapSphere(transform.position, checkRadius, enemyLayer);
@@ -119,6 +108,17 @@ namespace L4P.Gameplay.Enemy
             }
             return null;
         }
+        public override void TakeDamage(WeaponStat stats, Vector3 direction)
+        {
+            base.TakeDamage(stats, direction);
+
+            if(direction.magnitude > 0f)
+            {
+                controller.EnableAgent(false);
+                knockoutTime = Time.time + stats.knockTime;
+                fsm.currentState.type = StateType.KnockOut;
+            }
+        }
 
         public override void Die()
         {
@@ -127,10 +127,11 @@ namespace L4P.Gameplay.Enemy
             animator.SetTrigger("Die");
             deadTime = Time.time;
             GetComponent<Collider>().enabled = false;
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
             controller.enabled = false;
-
         }
 
         public void CheckNextState()
@@ -166,6 +167,13 @@ namespace L4P.Gameplay.Enemy
                     break;
                 case StateType.InAttack:
                     break;
+                case StateType.KnockOut:
+                    if(knockoutTime < Time.time)
+                    {
+                        fsm.currentState.type = StateType.CheckForTarget;
+                        controller.EnableAgent(true);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -178,6 +186,7 @@ namespace L4P.Gameplay.Enemy
             Gizmos.DrawWireSphere(transform.position, checkRadius);
         }
 
+        [System.Serializable]
         public class FSM
         {
 
@@ -189,6 +198,7 @@ namespace L4P.Gameplay.Enemy
             }
 
 
+            [System.Serializable]
             public class State
             {
                 public StateType type;
@@ -205,6 +215,7 @@ namespace L4P.Gameplay.Enemy
             MoveToTarget,
             HitTarget,
             InAttack,
+            KnockOut,
             Dead
         }
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 using L4P.Gameplay.Enemy;
 using L4P.Gameplay.Player.Animations;
 using L4P.Gameplay.Player.TopDown;
+using L4P.Gameplay.Weapons;
 
 namespace L4P.Gameplay.Player
 {
@@ -18,9 +19,9 @@ namespace L4P.Gameplay.Player
             animator = GetComponent<PlayerAnimatorController>();
             healthUi.SetMaxHealth(maxHealth);
         }
-        public override void TakeDamage(float damage)
+        public override void TakeDamage(WeaponStat stats, Vector3 direction)
         {
-            base.TakeDamage(damage);
+            base.TakeDamage(stats, direction);
             animator.GetHit();
             healthUi.SetHealth(currentHealth);
         }

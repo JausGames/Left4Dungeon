@@ -18,7 +18,7 @@ namespace L4P.Gameplay.Weapons
             {
                 var victim = contactHit.collider.attachedRigidbody.GetComponent<Hitable>();
                 if (victim)
-                    victim.TakeDamage(stats.damage);
+                    victim.TakeDamage(stats, (victim.transform.position - owner.transform.position).normalized);
             }
         }
     }

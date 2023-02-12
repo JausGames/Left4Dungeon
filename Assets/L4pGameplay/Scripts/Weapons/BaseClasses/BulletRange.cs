@@ -14,7 +14,7 @@ namespace L4P.Gameplay.Weapons
 
             var bulletObj = Instantiate(bulletPrefab, startingPoint.position, Owner.rotation);
             var bullet = bulletObj.GetComponent<Bullet>();
-            bullet.SetUp(stats.damage, stats.range, ennemyLayer);
+            bullet.SetUp(stats, ennemyLayer);
         }
     }
 }

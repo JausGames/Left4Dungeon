@@ -41,13 +41,13 @@ public class WeaponTrigger : MonoBehaviour
 
         if (other.GetComponent<Hitable>() || other.GetComponentInParent<Hitable>())
         {
-            var minion = other.GetComponent<Hitable>() ? other.GetComponent<Hitable>() : other.GetComponentInParent<Hitable>();
-            if (minion == weapon.Owner || touchedList.Contains(minion)) return;
+            var victim = other.GetComponent<Hitable>() ? other.GetComponent<Hitable>() : other.GetComponentInParent<Hitable>();
+            if (victim == weapon.Owner || touchedList.Contains(victim)) return;
 
-            minion.TakeDamage(weapon.Stats.damage);
-            touchedList.Add(minion);
+            victim.TakeDamage(weapon.Stats, (victim.transform.position - weapon.Owner.transform.position).normalized);
+            touchedList.Add(victim);
 
-            Debug.Log("WeaponTrigger, OnTriggerEnter : hitable " + minion.gameObject);
+            Debug.Log("WeaponTrigger, OnTriggerEnter : hitable " + victim.gameObject);
         }
     }
     private void OnTriggerStay(Collider other)
@@ -57,13 +57,13 @@ public class WeaponTrigger : MonoBehaviour
 
         if (other.GetComponent<Hitable>() || other.GetComponentInParent<Hitable>())
         {
-            var minion = other.GetComponent<Hitable>() ? other.GetComponent<Hitable>() : other.GetComponentInParent<Hitable>();
-            if (minion == weapon.Owner || touchedList.Contains(minion)) return;
+            var victim = other.GetComponent<Hitable>() ? other.GetComponent<Hitable>() : other.GetComponentInParent<Hitable>();
+            if (victim == weapon.Owner || touchedList.Contains(victim)) return;
 
-            minion.TakeDamage(weapon.Stats.damage);
-            touchedList.Add(minion);
+            victim.TakeDamage(weapon.Stats, (victim.transform.position - weapon.Owner.transform.position).normalized);
+            touchedList.Add(victim);
 
-            Debug.Log("WeaponTrigger, OnTriggerEnter : hitable " + minion.gameObject);
+            Debug.Log("WeaponTrigger, OnTriggerStay : hitable " + victim.gameObject);
         }
     }
 

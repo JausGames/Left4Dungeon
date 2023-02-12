@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,5 +55,10 @@ public class AiController : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(agent.destination, .25f);
+    }
+
+    internal void EnableAgent(bool v)
+    {
+        agent.isStopped = !v;
     }
 }
