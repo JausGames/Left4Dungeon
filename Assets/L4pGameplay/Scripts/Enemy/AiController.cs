@@ -53,6 +53,6 @@ public class AiController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(agent.destination, 1f);
+        Gizmos.DrawWireSphere(agent.destination, .25f);
     }
 }

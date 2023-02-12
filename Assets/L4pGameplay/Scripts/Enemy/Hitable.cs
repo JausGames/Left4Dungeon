@@ -10,9 +10,12 @@ namespace L4P.Gameplay.Enemy
         protected float maxHealth = 100f;
         protected float currentHealth = 100f;
 
+        protected bool alive;
+
         // Update player health
         virtual public void TakeDamage(float damage)
         {
+            //if (currentHealth == 0f) return;
             currentHealth -= damage;
             if (currentHealth <= 0)
             {

@@ -312,8 +312,8 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.43514395
-        functionName: OnHit
+      - time: 0.37600416
+        functionName: OnActivateTrigger
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ccd2e4ad6ce669141a1d12b5dff86d0e, type: 3}
         floatParameter: 0
@@ -321,6 +321,13 @@ ModelImporter:
         messageOptions: 0
       - time: 0.9620257
         functionName: OnIsNotAttacking
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ccd2e4ad6ce669141a1d12b5dff86d0e, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.4367816
+        functionName: OnDeactivateTrigger
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ccd2e4ad6ce669141a1d12b5dff86d0e, type: 3}
         floatParameter: 0

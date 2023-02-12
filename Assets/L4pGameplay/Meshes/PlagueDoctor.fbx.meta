@@ -222,6 +222,15 @@ ModelImporter:
   - first:
       74: -8875000481628134965
     second: 'plague_doctor_rig|standing R attack combot 3 hits '
+  - first:
+      74: 3160629655019617835
+    second: Tpose (1)
+  - first:
+      74: -4844387171004224456
+    second: plague_doctor_rig|standing hit reaction body
+  - first:
+      74: 8410592391202393115
+    second: plague_doctor_rig|standing die
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -258,15 +267,19 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'plague_doctor_rig|standing L spell book end'
+    animationImportWarnings: "\nClip 'plague_doctor_rig|standing die' has import
+      animation warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'UpLeg.L' has scale animation
+      that will be discarded.\n\t'UpLeg.R' has scale animation that will be discarded.\n\nClip
+      'plague_doctor_rig|standing L spell book end' has import animation warnings
+      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'UpLeg.L' has scale animation that will
+      be discarded.\n\nClip 'plague_doctor_rig|standing L spell book start' has import
+      animation warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'UpLeg.L' has scale animation
+      that will be discarded.\n\nClip 'plague_doctor_rig|standing R spell book end'
       has import animation warnings that might lower retargeting quality:\nNote:
       Activate translation DOF on avatar to improve retargeting quality.\n\t'UpLeg.L'
-      has scale animation that will be discarded.\n\nClip 'plague_doctor_rig|standing
-      L spell book start' has import animation warnings that might lower retargeting
-      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'UpLeg.L'
-      has scale animation that will be discarded.\n\nClip 'plague_doctor_rig|standing
-      R spell book end' has import animation warnings that might lower retargeting
-      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'UpLeg.L'
       has scale animation that will be discarded.\n\nClip 'plague_doctor_rig|standing
       R spell book start' has import animation warnings that might lower retargeting
       quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'UpLeg.L'
@@ -797,6 +810,64 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: plague_doctor_rig|standing hit reaction body
+      takeName: plague_doctor_rig|standing hit reaction body
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 29
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: plague_doctor_rig|standing die
+      takeName: plague_doctor_rig|standing die
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 69
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

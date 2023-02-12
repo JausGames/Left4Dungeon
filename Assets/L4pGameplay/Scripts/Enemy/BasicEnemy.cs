@@ -1,3 +1,4 @@
+using L4P.Gameplay.Weapons;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,13 +16,11 @@ namespace L4P.Gameplay.Enemy
         [Space]
         [Header("Hit")]
         [SerializeField] LayerMask enemyLayer;
-        [SerializeField] private Transform hitStart;
-        [SerializeField] float hitRadius = .25f;
-        [SerializeField] float hitDamage = 25f;
 
         [Space]
         [Header("Componenent")]
         private EnemyAnimatorEvent animatorEvent;
+        [SerializeField] private Weapon weapon;
 
 
         float deadTime = 0f;
@@ -38,11 +37,14 @@ namespace L4P.Gameplay.Enemy
 
             animatorEvent = GetComponentInChildren<EnemyAnimatorEvent>();
             animatorEvent.IsNotAttackingEvent.AddListener(delegate { fsm.currentState.type = StateType.HitTarget; });
-            animatorEvent.HitEvent.AddListener(CheckVictim);
+
+            animatorEvent.ActivateTriggerEvent.AddListener(delegate { ((MeleeWeapon)weapon).Trigger.IsActive = true; });
+            animatorEvent.DeactivateTriggerEvent.AddListener(delegate { ((MeleeWeapon)weapon).Trigger.IsActive = false; });
         }
         // Update is called once per frame
         void Update()
         {
+
             CheckNextState();
 
             animator.SetFloat("Speed", controller.Speed);
@@ -50,31 +52,50 @@ namespace L4P.Gameplay.Enemy
             switch (fsm.currentState.type)
             {
                 case StateType.CheckForTarget:
+
                     break;
+
                 case StateType.MoveToTarget:
+
                     if ((controller.Destination - target.transform.position).sqrMagnitude > newDestinationRadius)
                     {
                         controller.Destination = target.transform.position;
                     }
                     break;
+
                 case StateType.HitTarget:
 
-                    Vector3 aiToTarget = target.transform.position - transform.position;
-                    aiToTarget.y = 0f;
-                    Quaternion newRotatation = Quaternion.LookRotation(aiToTarget);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotatation, rotationSpeed * Time.deltaTime);
+                    transform.rotation = GetNewRotation();
                     break;
+
                 case StateType.Dead:
-                    if(Time.time > deadTime + 4f && Time.time < deadTime + 6f)
+
+                    if (Time.time > deadTime + 4f && Time.time < deadTime + 6f)
                         transform.position -= Vector3.up * .2f * Time.deltaTime;
-                    else if(Time.time > deadTime + 6f)
+                    else if (Time.time > deadTime + 6f)
                         Destroy(gameObject);
                     break;
+
+                case StateType.InAttack:
+
+                    transform.rotation = GetNewRotation();
+                    break;
+
                 default:
                     break;
             }
         }
-        void CheckVictim()
+
+        private Quaternion GetNewRotation()
+        {
+            Vector3 aiToTarget = target.transform.position - transform.position;
+            aiToTarget.y = 0f;
+            Quaternion newRotatation = Quaternion.LookRotation(aiToTarget);
+            var result = Quaternion.RotateTowards(transform.rotation, newRotatation, rotationSpeed * Time.deltaTime);
+            return result;
+        }
+
+        /*void CheckVictim()
         {
             var hits = Physics.OverlapSphere(hitStart.position, hitRadius, enemyLayer);
 
@@ -84,7 +105,8 @@ namespace L4P.Gameplay.Enemy
                 if (hitable)
                     hitable.TakeDamage(hitDamage);
             }
-        }
+        }*/
+
         private Hitable CheckEnemy()
         {
             var hits = Physics.OverlapSphere(transform.position, checkRadius, enemyLayer);
@@ -147,6 +169,13 @@ namespace L4P.Gameplay.Enemy
                 default:
                     break;
             }
+        }
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, checkForHitRadius);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, checkRadius);
         }
 
         public class FSM

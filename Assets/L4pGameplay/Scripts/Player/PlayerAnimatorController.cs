@@ -16,11 +16,20 @@ namespace L4P.Gameplay.Player.Animations
         [SerializeField] AnimationCurve rootMotionCurve;
         [SerializeField] AnimationClipRootMotionData currentRootMotionData = new AnimationClipRootMotionData();
 
+
         PlayerAnimatorEvent animatorEvent;
         private bool isAttacking;
         [SerializeField] private bool root;
+
+        internal void Die()
+        {
+            animator.SetTrigger("Die");
+        }
+
         private float timeRoot;
         private Rigidbody body;
+        private float hitTime;
+        private bool getHit;
 
         public void SetMove(Vector2 move) => this.move = move;
         private void Awake()
@@ -44,6 +53,7 @@ namespace L4P.Gameplay.Player.Animations
                 }
             );
 
+            Debug.Log("AnimHash : Attack = " + Animator.StringToHash("Attack"));
             Debug.Log("AnimHash : AttackL = " + Animator.StringToHash("AttackL"));
             Debug.Log("AnimHash : AttackR = " + Animator.StringToHash("AttackR"));
             Debug.Log("AnimHash : CastL = " + Animator.StringToHash("CastL"));
@@ -68,7 +78,11 @@ namespace L4P.Gameplay.Player.Animations
                 body.transform.position += body.transform.forward * (curve.Evaluate(passedTime * speed) - curve.Evaluate((passedTime - Time.deltaTime) * speed));
             }
 
-            if (isAttacking)
+            if(getHit && hitTime + 1f > Time.time)
+            {
+                ManageBooleanLayer(true, 1);
+            }
+            else if(isAttacking)
             {
                 if (animator.GetLayerWeight(1) > 0f) ManageBooleanLayer(false, 1);
                 if (animator.GetLayerWeight(2) > 0f) ManageBooleanLayer(false, 2);
@@ -76,19 +90,20 @@ namespace L4P.Gameplay.Player.Animations
             }
             else
             {
-                var newX = Mathf.MoveTowards(animator.GetFloat("MoveX"), move.x, Time.deltaTime * blendSpeed);
-                var newY = Mathf.MoveTowards(animator.GetFloat("MoveY"), move.y, Time.deltaTime * blendSpeed);
-                animator.SetFloat("MoveX", newX);
-                animator.SetFloat("MoveY", newY);
-
                 ManageBooleanLayer((castL && !castR) || (!castL && castR), 1);
                 ManageBooleanLayer(castL && castR, 2);
                 ManageBooleanLayer(castR && castL, 3);
             }
 
+            SetMovementAnimation();
+        }
 
-
-
+        private void SetMovementAnimation()
+        {
+            var newX = Mathf.MoveTowards(animator.GetFloat("MoveX"), move.x, Time.deltaTime * blendSpeed);
+            var newY = Mathf.MoveTowards(animator.GetFloat("MoveY"), move.y, Time.deltaTime * blendSpeed);
+            animator.SetFloat("MoveX", newX);
+            animator.SetFloat("MoveY", newY);
         }
 
         public void OnAnimationChange(AnimationClip clip, float speed)
@@ -127,14 +142,14 @@ namespace L4P.Gameplay.Player.Animations
             return null;
         }
 
-        private void ManageBooleanLayer(bool cast, int layerId)
+        private void ManageBooleanLayer(bool activate, int layerId)
         {
-            if (cast && animator.GetLayerWeight(layerId) != 1f)
+            if (activate && animator.GetLayerWeight(layerId) != 1f)
             {
                 var weight = Mathf.MoveTowards(animator.GetLayerWeight(layerId), 1f, Time.deltaTime * blendSpeed);
                 animator.SetLayerWeight(layerId, weight);
             }
-            else if (!cast && animator.GetLayerWeight(layerId) != 0f)
+            else if (!activate && animator.GetLayerWeight(layerId) != 0f)
             {
                 var weight = Mathf.MoveTowards(animator.GetLayerWeight(layerId), 0f, Time.deltaTime * blendSpeed);
                 animator.SetLayerWeight(layerId, weight);
@@ -155,6 +170,12 @@ namespace L4P.Gameplay.Player.Animations
                 animator.SetTrigger(animAttackTriggerId);
             else
                 animator.ResetTrigger(animAttackTriggerId);
+        }
+        internal void GetHit()
+        {
+            animator.SetTrigger("GetHit");
+            hitTime = Time.time;
+            getHit = true;
         }
     }
 
