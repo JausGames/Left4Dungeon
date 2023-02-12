@@ -222,7 +222,27 @@ ModelImporter:
   - first:
       74: -8875000481628134965
     second: 'plague_doctor_rig|standing R attack combot 3 hits '
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cloth
+    second: {fileID: 2100000, guid: 0d36a8998a0d6794a870970afe3561de, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: d170d8a654d74c741898c1b25a291364, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leather
+    second: {fileID: 2100000, guid: 32697d0bd130e044f890211412949210, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Steel
+    second: {fileID: 2100000, guid: f194fa940b263414c8bd84bfabe85746, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
