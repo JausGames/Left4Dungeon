@@ -16,6 +16,7 @@ namespace L4P.Gameplay.Player
         [SerializeField] HealthBar healthUi;
         private void Awake()
         {
+            body = GetComponent<Rigidbody>();
             animator = GetComponent<PlayerAnimatorController>();
             healthUi.SetMaxHealth(maxHealth);
         }
@@ -33,7 +34,7 @@ namespace L4P.Gameplay.Player
             GetComponent<PlayerCombat>().enabled = false;
             GetComponent<PlayerController>().enabled = false;
             GetComponent<Collider>().enabled = false;
-            GetComponent<Rigidbody>().useGravity = false;
+            body.useGravity = false;
 
         }
     }

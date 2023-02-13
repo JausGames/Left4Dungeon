@@ -5379,6 +5379,17 @@ MonoBehaviour:
   affectsNavigation: 0
   userData: -1
   externallyManaged: 0
+--- !u!114 &203499724 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5071377590460313968, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
+  m_PrefabInstance: {fileID: 787011071}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a687344831132aa4d96f398766f22985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &212706788 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -449179876703861790, guid: 4bf66dd6544171e44aae0bca81b9d209, type: 3}
@@ -5639,7 +5650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1932498532606489308, guid: 8a473b6c15854844eaa0c41ae2ed265b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1932498532606489308, guid: 8a473b6c15854844eaa0c41ae2ed265b, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -13709,8 +13720,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5071377590616949924, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 1572907203}
+    - target: {fileID: 5071377590616949924, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: stance
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5071377590616949924, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
+      propertyPath: trigger
+      value: 
+      objectReference: {fileID: 203499724}
+    - target: {fileID: 5071377590616949924, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
+      propertyPath: stats.knockTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5071377590616949924, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
+      propertyPath: stats.knockback
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5560443454819782482, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -13784,6 +13811,18 @@ PrefabInstance:
     - target: {fileID: 5907093339275436367, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9058135046118059450, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 1572907203}
+    - target: {fileID: 9058135046118059450, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
+      propertyPath: stats.knockTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9058135046118059450, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
+      propertyPath: stats.knockback
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
@@ -19283,6 +19322,8 @@ MonoBehaviour:
     damage: 25
     range: 2
     cooldown: 0.2
+    knockback: 1
+    knockTime: 0.5
   stance: 0
   owner: {fileID: 1853244823}
   trigger: {fileID: 1012359538}
@@ -24336,7 +24377,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1853244813}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a96f41f6441e79a4da9a2ec0b8b5a303, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.4
@@ -24399,7 +24440,11 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
+  knockoutTime: 0
   weapon: {fileID: 1012359537}
+  fsm:
+    currentState:
+      type: 0
 --- !u!1 &1897647674 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 252169882971934289, guid: c1dac06a3125d62429421d3d84bc3404, type: 3}

@@ -30,8 +30,9 @@ namespace L4P.Gameplay.Enemy
         Animator animator;
         AiController controller;
 
-        private void Start()
+        private void Awake()
         {
+            body = GetComponent<Rigidbody>();
             controller = GetComponent<AiController>();
             animator = GetComponentInChildren<Animator>();
             controller.DestinationReachedOrUnreachable.AddListener(delegate { Debug.Log("BasicEnemy, Event : " + gameObject.name + " reached destination"); });
@@ -114,7 +115,7 @@ namespace L4P.Gameplay.Enemy
 
             if (fsm.currentState.type != StateType.Dead && direction.magnitude > 0f)
             {
-                //GetComponent<Rigidbody>().velocity = Vector3.zero;
+                //body.velocity = Vector3.zero;
                 controller.EnableAgent(false);
                 knockoutTime = Time.time + stats.knockTime;
                 fsm.currentState.type = StateType.KnockOut;
@@ -130,9 +131,9 @@ namespace L4P.Gameplay.Enemy
             deadTime = Time.time;
             controller.EnableAgent(false);
             GetComponent<Collider>().enabled = false;
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            GetComponent<Rigidbody>().isKinematic = true;
-            GetComponent<Rigidbody>().useGravity = false;
+            body.velocity = Vector3.zero;
+            body.isKinematic = true;
+            body.useGravity = false;
             GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
             controller.enabled = false;
         }

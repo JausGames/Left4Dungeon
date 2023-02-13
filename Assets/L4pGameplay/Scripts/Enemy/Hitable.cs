@@ -12,6 +12,7 @@ namespace L4P.Gameplay.Enemy
         protected float currentHealth = 100f;
 
         protected bool alive;
+        protected Rigidbody body;
 
         // Update player health
         virtual public void TakeDamage(WeaponStat stats, Vector3 direction)
@@ -23,7 +24,11 @@ namespace L4P.Gameplay.Enemy
                 currentHealth = 0;
                 Die();
             }
-            GetComponent<Rigidbody>().AddForce(stats.knockback * direction, ForceMode.Impulse);
+            if(stats.knockback > 0f)
+            {
+                body.velocity = Vector3.zero;
+                GetComponent<Rigidbody>().AddForce(stats.knockback * direction, ForceMode.Impulse);
+            }
         }
 
         virtual public void Die()
