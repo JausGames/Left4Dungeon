@@ -39,7 +39,7 @@ namespace L4P.Gameplay.Weapons
             {
                 var victim = collision.collider.attachedRigidbody.GetComponent<Hitable>();
                 if (victim)
-                    victim.TakeDamage(stats, (victim.transform.position - transform.position).normalized);
+                    victim.TakeDamage(stats, (victim.transform.position - transform.position - (victim.transform.position - transform.position).y * Vector3.up).normalized);
             }
             DieOnImpact();
         }
@@ -51,7 +51,7 @@ namespace L4P.Gameplay.Weapons
             {
                 var victim = other.attachedRigidbody.GetComponent<Hitable>();
                 if (victim)
-                    victim.TakeDamage(stats, knockback * (victim.transform.position - transform.position).normalized);
+                    victim.TakeDamage(stats, (victim.transform.position - transform.position - (victim.transform.position - transform.position).y * Vector3.up).normalized);
             }
             DieOnImpact();
         }

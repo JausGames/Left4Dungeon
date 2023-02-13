@@ -37,7 +37,7 @@ namespace L4P.Gameplay.Enemy
             controller.DestinationReachedOrUnreachable.AddListener(delegate { Debug.Log("BasicEnemy, Event : " + gameObject.name + " reached destination"); });
 
             animatorEvent = GetComponentInChildren<EnemyAnimatorEvent>();
-            animatorEvent.IsNotAttackingEvent.AddListener(delegate { fsm.currentState.type = StateType.HitTarget; });
+            animatorEvent.IsNotAttackingEvent.AddListener(delegate { if (fsm.currentState.type == StateType.Dead) return; fsm.currentState.type = StateType.CheckForTarget; });
 
             animatorEvent.ActivateTriggerEvent.AddListener(delegate { ((MeleeWeapon)weapon).Trigger.IsActive = true; });
             animatorEvent.DeactivateTriggerEvent.AddListener(delegate { ((MeleeWeapon)weapon).Trigger.IsActive = false; });
@@ -112,11 +112,13 @@ namespace L4P.Gameplay.Enemy
         {
             base.TakeDamage(stats, direction);
 
-            if(direction.magnitude > 0f)
+            if (fsm.currentState.type != StateType.Dead && direction.magnitude > 0f)
             {
+                //GetComponent<Rigidbody>().velocity = Vector3.zero;
                 controller.EnableAgent(false);
                 knockoutTime = Time.time + stats.knockTime;
                 fsm.currentState.type = StateType.KnockOut;
+                animator.SetTrigger("GetHit");
             }
         }
 
@@ -126,6 +128,7 @@ namespace L4P.Gameplay.Enemy
             controller.Destination = transform.position;
             animator.SetTrigger("Die");
             deadTime = Time.time;
+            controller.EnableAgent(false);
             GetComponent<Collider>().enabled = false;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().isKinematic = true;
@@ -154,9 +157,7 @@ namespace L4P.Gameplay.Enemy
                     break;
                 case StateType.HitTarget:
                     if ((transform.position - target.transform.position).sqrMagnitude > checkForHitRadius)
-                    {
                         fsm.currentState.type = StateType.MoveToTarget;
-                    }
                     else
                     {
                         fsm.currentState.type = StateType.InAttack;
