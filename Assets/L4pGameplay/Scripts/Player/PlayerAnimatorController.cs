@@ -11,11 +11,22 @@ namespace L4P.Gameplay.Player.Animations
         [SerializeField] float blendSpeed = 4f;
         [SerializeField] bool castL = false;
         [SerializeField] bool castR = false;
+        [SerializeField] bool comboable = false;
 
         Vector2 move;
         [SerializeField] AnimationCurve rootMotionCurve;
         [SerializeField] AnimationClipRootMotionData currentRootMotionData = new AnimationClipRootMotionData();
 
+        internal void SetComboable(bool v)
+        {
+            comboable = v;
+        }
+
+        internal void SetCombo(bool v)
+        {
+            if (v && !comboable) return;
+            animator.SetBool("Combo", v);
+        }
 
         PlayerAnimatorEvent animatorEvent;
         private bool isAttacking;
@@ -40,18 +51,9 @@ namespace L4P.Gameplay.Player.Animations
             animatorEvent.IsAttacking.AddListener(delegate { isAttacking = true; });
             animatorEvent.IsNotAttacking.AddListener(delegate { isAttacking = false; });
 
-            animatorEvent.RootMotionActivateEvent.AddListener(
-                delegate
-                {
-                    //SetRootMotion(true);
-                }
-            );
-            animatorEvent.RootMotionDeactivateEvent.AddListener(
-                delegate
-                {
-                    //SetRootMotion(false);
-                }
-            );
+            animatorEvent.IsComboable.AddListener(delegate { comboable = true; });
+            animatorEvent.IsNotComboable.AddListener(delegate { comboable = false; });
+
 
             Debug.Log("AnimHash : Attack = " + Animator.StringToHash("Attack"));
             Debug.Log("AnimHash : AttackL = " + Animator.StringToHash("AttackL"));
@@ -166,10 +168,17 @@ namespace L4P.Gameplay.Player.Animations
 
         public void SetAttackAnimationTrigger(bool performed, int animAttackTriggerId = 1080829965)
         {
-            if (performed)
-                animator.SetTrigger(animAttackTriggerId);
+            if (comboable && performed)
+            {
+                animator.SetBool("Combo", true);
+            }
             else
-                animator.ResetTrigger(animAttackTriggerId);
+            {
+                if (performed)
+                    animator.SetTrigger(animAttackTriggerId);
+                else
+                    animator.ResetTrigger(animAttackTriggerId);
+            }
         }
         internal void GetHit()
         {

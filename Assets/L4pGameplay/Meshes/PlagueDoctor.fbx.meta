@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 4bf66dd6544171e44aae0bca81b9d209
 ModelImporter:
-  serializedVersion: 21202
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -6712725380312225458
@@ -734,7 +734,7 @@ ModelImporter:
       takeName: 'plague_doctor_rig|standing R attack combot 3 hits '
       internalID: 0
       firstFrame: 0
-      lastFrame: 106
+      lastFrame: 107
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -754,8 +754,8 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.025761124
-        functionName: OnIsAttacking
+      - time: 0
+        functionName: OnResetCombo
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
@@ -768,15 +768,50 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.2619179
+      - time: 0.17955801
+        functionName: OnIsComboable
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.23292351
         functionName: OnDeactivateRightHand
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.32903144
+      - time: 0.25060385
+        functionName: OnIsNotComboable
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.29506713
+        functionName: OnResetCombo
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.29686198
+        functionName: OnIsComboable
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.33731872
         functionName: OnActivateRightHand
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.38965848
+        functionName: OnIsNotComboable
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
@@ -803,8 +838,8 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.9705139
-        functionName: OnIsNotAttacking
+      - time: 1
+        functionName: OnResetCombo
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
@@ -860,6 +895,64 @@ ModelImporter:
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: plague_doctor_rig|standing R attack combot 3 hits  (1)
+      takeName: 'plague_doctor_rig|standing R attack combot 3 hits '
+      internalID: 2063287868552435183
+      firstFrame: 30
+      lastFrame: 45
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: plague_doctor_rig|standing R attack combot 3 hits  (2)
+      takeName: 'plague_doctor_rig|standing R attack combot 3 hits '
+      internalID: -8920032320935605688
+      firstFrame: 45
+      lastFrame: 106
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1
@@ -1752,6 +1845,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

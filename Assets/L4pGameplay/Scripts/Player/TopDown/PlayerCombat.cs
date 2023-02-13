@@ -64,6 +64,7 @@ namespace L4P.Gameplay.Player.TopDown
             animatorEvent.LeftDeactivateEvent.AddListener(delegate { ((MeleeWeapon)currentLeftHand).Trigger.IsActive = false; });
             animatorEvent.RightActivateEvent.AddListener(delegate { ((MeleeWeapon)currentRightHand).Trigger.IsActive = true; });
             animatorEvent.RightDeactivateEvent.AddListener(delegate { ((MeleeWeapon)currentRightHand).Trigger.IsActive = false; });
+            animatorEvent.ResetComboEvent.AddListener(delegate { animator.SetCombo(false); });
         }
     }
 }

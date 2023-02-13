@@ -3,16 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivateRootMotionBehaviour : StateMachineBehaviour
+public class IsComboableBehaviour : StateMachineBehaviour
 {
-    [SerializeField] AnimationClip clip;
-    [SerializeField] float speed;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         var controller = animator.GetComponentInParent<PlayerAnimatorController>();
-        controller.OnAnimationChange(clip, speed);
-        controller.SetRootMotion(true);
+        controller.SetCombo(false);
+        controller.SetComboable(true);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -25,11 +23,7 @@ public class ActivateRootMotionBehaviour : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         var controller = animator.GetComponentInParent<PlayerAnimatorController>();
-        var animatorEvent = animator.GetComponent<PlayerAnimatorEvent>();
-        controller.SetRootMotion(false);
-        animatorEvent.IsNotAttacking.Invoke();
-
-
+        controller.SetComboable(false);
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
