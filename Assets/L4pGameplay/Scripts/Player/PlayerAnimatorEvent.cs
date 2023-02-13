@@ -39,8 +39,8 @@ namespace L4P.Gameplay.Player.Animations
         public void OnIsNotAttacking() => IsNotAttacking.Invoke();
 
         public void OnResetCombo() => resetComboEvent.Invoke();
-        public void OnIsNotComboable() => isComboable.Invoke();
-        public void OnIsComboable() => IsNotComboable.Invoke();
+        public void OnIsComboable() => isComboable.Invoke();
+        public void OnIsNotComboable() => IsNotComboable.Invoke();
 
         public void OnActivateRightHand() => rightActivateEvent.Invoke();
         public void OnDeactivateRightHand() => rightDeactivateEvent.Invoke();

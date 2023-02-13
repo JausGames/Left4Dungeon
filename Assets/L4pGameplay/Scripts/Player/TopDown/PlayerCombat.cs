@@ -25,13 +25,16 @@ namespace L4P.Gameplay.Player.TopDown
 
         public void UseWeapon(bool performed, bool isRightHand)
         {
-            if (isAttacking && performed) return;
-            this.isRightHand = isRightHand;
-            if (isRightHand) useRightWeapon = performed;
-            else useLeftWeapon = performed;
-            Weapon weapon = isRightHand ? currentRightHand : currentLeftHand;
-            weapon.Use(performed, animator);
-            //animator.SetAttackAnimationTrigger(performed);
+            if (animator.Comboable && performed) animator.SetCombo(true);
+            else if (!isAttacking || !performed)
+            {
+                this.isRightHand = isRightHand;
+                if (isRightHand) useRightWeapon = performed;
+                else useLeftWeapon = performed;
+                Weapon weapon = isRightHand ? currentRightHand : currentLeftHand;
+                weapon.Use(performed, animator);
+                //animator.SetAttackAnimationTrigger(performed);
+            }
         }
         private void Update()
         {

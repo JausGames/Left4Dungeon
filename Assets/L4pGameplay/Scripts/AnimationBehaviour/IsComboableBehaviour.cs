@@ -10,7 +10,7 @@ public class IsComboableBehaviour : StateMachineBehaviour
     {
         var controller = animator.GetComponentInParent<PlayerAnimatorController>();
         controller.SetCombo(false);
-        controller.SetComboable(true);
+        //controller.SetComboable(true);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -24,6 +24,7 @@ public class IsComboableBehaviour : StateMachineBehaviour
     {
         var controller = animator.GetComponentInParent<PlayerAnimatorController>();
         controller.SetComboable(false);
+        controller.SetCombo(false);
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

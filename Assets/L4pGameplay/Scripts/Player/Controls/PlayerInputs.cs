@@ -46,8 +46,10 @@ namespace L4P.Gameplay.Player.Controls
         }
         public void OnUseWeapon(bool context, bool isRightHand)
         {
+            Debug.Log("caca : performed = " + context);
             //Debug.Log(gameObject.ToString() + ", Network Informations : IsLocalPlayer " + IsLocalPlayer);
             //if (motor == null || !IsOwner) return;
+
             combat.UseWeapon(context, isRightHand);
         }
     }

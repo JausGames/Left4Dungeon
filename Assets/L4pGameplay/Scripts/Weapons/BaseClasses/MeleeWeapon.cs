@@ -16,8 +16,16 @@ namespace L4P.Gameplay.Weapons
         }
         public override void Use(bool performed, PlayerAnimatorController playerAnimator)
         {
-            if (performed && NextHit <= Time.time)
+            Debug.Log("MeleeWeapon, Use : " + performed);
+            if (playerAnimator.Comboable && performed)
             {
+                Debug.Log("MeleeWeapon, Use : SetCombo true");
+                playerAnimator.SetCombo(performed);
+            }
+
+            else if (performed)
+            {
+                Debug.Log("MeleeWeapon, Use : SetAttackAnimationTrigger");
                 playerAnimator.SetAttackAnimationTrigger(performed, stance == Stance.Left ? leftAnimTriggerHash : rightAnimTriggerHash);
 
                 NextHit = Time.time + stats.cooldown;

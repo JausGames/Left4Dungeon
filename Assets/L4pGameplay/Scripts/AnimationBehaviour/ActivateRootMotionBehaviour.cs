@@ -11,8 +11,10 @@ public class ActivateRootMotionBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         var controller = animator.GetComponentInParent<PlayerAnimatorController>();
+        var animatorEvent = animator.GetComponent<PlayerAnimatorEvent>();
         controller.OnAnimationChange(clip, speed);
         controller.SetRootMotion(true);
+        animatorEvent.IsAttacking.Invoke();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

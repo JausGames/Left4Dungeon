@@ -19,12 +19,13 @@ namespace L4P.Gameplay.Player.Animations
 
         internal void SetComboable(bool v)
         {
-            comboable = v;
+            Comboable = v;
         }
 
         internal void SetCombo(bool v)
         {
-            if (v && !comboable) return;
+            Debug.Log("PlayerAnimatorController : combo = " + v);
+            if (v && !Comboable) return;
             animator.SetBool("Combo", v);
         }
 
@@ -42,6 +43,8 @@ namespace L4P.Gameplay.Player.Animations
         private float hitTime;
         private bool getHit;
 
+        public bool Comboable { get => comboable; set => comboable = value; }
+
         public void SetMove(Vector2 move) => this.move = move;
         private void Awake()
         {
@@ -51,8 +54,8 @@ namespace L4P.Gameplay.Player.Animations
             animatorEvent.IsAttacking.AddListener(delegate { isAttacking = true; });
             animatorEvent.IsNotAttacking.AddListener(delegate { isAttacking = false; });
 
-            animatorEvent.IsComboable.AddListener(delegate { comboable = true; });
-            animatorEvent.IsNotComboable.AddListener(delegate { comboable = false; });
+            animatorEvent.IsComboable.AddListener(delegate { Comboable = true; });
+            animatorEvent.IsNotComboable.AddListener(delegate { Comboable = false; });
 
 
             Debug.Log("AnimHash : Attack = " + Animator.StringToHash("Attack"));
@@ -168,11 +171,12 @@ namespace L4P.Gameplay.Player.Animations
 
         public void SetAttackAnimationTrigger(bool performed, int animAttackTriggerId = 1080829965)
         {
-            if (comboable && performed)
+            /*if (Comboable && performed)
             {
                 animator.SetBool("Combo", true);
-            }
-            else
+            }*/
+            //else 
+            if(performed && !isAttacking)
             {
                 if (performed)
                     animator.SetTrigger(animAttackTriggerId);
