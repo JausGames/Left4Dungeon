@@ -26,6 +26,7 @@ public class ActivateRootMotionBehaviour : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if(animator.GetCurrentAnimatorClipInfo(0)[layerIndex].clip.name == clip.name) return;
         var controller = animator.GetComponentInParent<PlayerAnimatorController>();
         var animatorEvent = animator.GetComponent<PlayerAnimatorEvent>();
         controller.SetRootMotion(false);

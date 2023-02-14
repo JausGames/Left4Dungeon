@@ -6,6 +6,7 @@ using UnityEngine;
 public class IsComboableBehaviour : StateMachineBehaviour
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    [SerializeField] AnimationClip clip;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         var controller = animator.GetComponentInParent<PlayerAnimatorController>();
@@ -22,6 +23,7 @@ public class IsComboableBehaviour : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (animator.GetCurrentAnimatorClipInfo(0)[layerIndex].clip.name == clip.name) return;
         var controller = animator.GetComponentInParent<PlayerAnimatorController>();
         controller.SetComboable(false);
         controller.SetCombo(false);

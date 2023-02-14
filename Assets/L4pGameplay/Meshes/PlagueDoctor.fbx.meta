@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 4bf66dd6544171e44aae0bca81b9d209
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 21202
   internalIDToNameTable:
   - first:
       74: -6712725380312225458
@@ -740,28 +740,28 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.07320443
+      - time: 0.049723763
         functionName: OnIsComboable
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.17639522
+      - time: 0.16810793
         functionName: OnActivateRightHand
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.23292351
+      - time: 0.22601743
         functionName: OnDeactivateRightHand
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.25224945
+      - time: 0.27849254
         functionName: OnResetCombo
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
@@ -775,7 +775,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.39601925
+      - time: 0.4194999
         functionName: OnDeactivateRightHand
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
@@ -791,6 +791,13 @@ ModelImporter:
         messageOptions: 0
       - time: 0.73430616
         functionName: OnDeactivateRightHand
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.7921582
+        functionName: OnResetCombo
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
@@ -1738,7 +1745,6 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
-  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

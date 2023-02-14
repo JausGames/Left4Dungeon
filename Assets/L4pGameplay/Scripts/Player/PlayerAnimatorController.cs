@@ -17,6 +17,13 @@ namespace L4P.Gameplay.Player.Animations
         [SerializeField] AnimationCurve rootMotionCurve;
         [SerializeField] AnimationClipRootMotionData currentRootMotionData = new AnimationClipRootMotionData();
 
+        private float timeRoot;
+        private Rigidbody body;
+        private float hitTime;
+        private bool getHit;
+
+        public bool Comboable { get => comboable; set => comboable = value; }
+        public bool Combo { get => animator.GetBool("Combo"); }
         internal void SetComboable(bool v)
         {
             Comboable = v;
@@ -38,12 +45,6 @@ namespace L4P.Gameplay.Player.Animations
             animator.SetTrigger("Die");
         }
 
-        private float timeRoot;
-        private Rigidbody body;
-        private float hitTime;
-        private bool getHit;
-
-        public bool Comboable { get => comboable; set => comboable = value; }
 
         public void SetMove(Vector2 move) => this.move = move;
         private void Awake()
@@ -75,12 +76,13 @@ namespace L4P.Gameplay.Player.Animations
         {
             if (root)
             {
-                var speed = currentRootMotionData.speed;
+
                 var curve = currentRootMotionData.curve;
-                var passedTime = Time.time - timeRoot;
+                var currentTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
+                Debug.Log("IsComboableBehaviour : currentTime = " + currentTime);
 
-                body.transform.position += body.transform.forward * (curve.Evaluate(passedTime * speed) - curve.Evaluate((passedTime - Time.deltaTime) * speed));
+                body.transform.position += body.transform.forward * (curve.Evaluate(currentTime * currentRootMotionData.length) - curve.Evaluate((currentTime * currentRootMotionData.length - Time.deltaTime)));
             }
 
             if(getHit && hitTime + 1f > Time.time)
