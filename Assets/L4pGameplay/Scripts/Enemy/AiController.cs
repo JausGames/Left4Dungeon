@@ -24,10 +24,9 @@ public class AiController : MonoBehaviour
 
     public bool IsActive
     {
-        get => isActive;
+        get => !agent.isStopped;
         set
         {
-            isActive = value;
             agent.isStopped = !value;
         }
     }

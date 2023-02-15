@@ -7,11 +7,13 @@ namespace L4P.Gameplay.Enemy
 {
     public class Hitable : MonoBehaviour
     {
-        // Characteristics of the player
-        protected float maxHealth = 100f;
-        protected float currentHealth = 100f;
+        [Header("Status")]
+        [SerializeField] protected bool alive;
 
-        protected bool alive;
+        [Header("Characteristics")]
+        [SerializeField] protected float maxHealth = 100f;
+        [SerializeField] protected float currentHealth = 100f;
+
         protected Rigidbody body;
 
         // Update player health
@@ -26,15 +28,18 @@ namespace L4P.Gameplay.Enemy
             }
             if(stats.knockback > 0f)
             {
-                body.velocity = Vector3.zero;
-                GetComponent<Rigidbody>().AddForce(stats.knockback * direction, ForceMode.Impulse);
+                body.velocity = stats.knockback * direction;
+                //GetComponent<Rigidbody>().AddForce(stats.knockback * direction, ForceMode.Impulse);
             }
         }
 
         virtual public void Die()
         {
             // Code for death event
-            Destroy(gameObject);
+            alive = false;
+            body.velocity = Vector3.zero;
+            body.isKinematic = true;
+            body.useGravity = false;
         }
     }
 }

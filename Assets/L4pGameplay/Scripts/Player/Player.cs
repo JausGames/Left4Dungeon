@@ -28,14 +28,12 @@ namespace L4P.Gameplay.Player
         }
         public override void Die()
         {
-            alive = false;
+            base.Die();
 
             animator.Die();
             GetComponent<PlayerCombat>().enabled = false;
             GetComponent<PlayerController>().enabled = false;
             GetComponent<Collider>().enabled = false;
-            body.useGravity = false;
-
         }
     }
 }

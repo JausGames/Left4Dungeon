@@ -7,19 +7,19 @@ namespace L4P.Gameplay.Player.TopDown
     [RequireComponent(typeof(PlayerAnimatorController))]
     public class PlayerController : MonoBehaviour, IPlayerController
     {
-        [Header("States")]
+        [Header("Status")]
         private bool sprinting;
 
-        [Header("Inputs")]
-        private float rotationSpeed = 10f;
-        [SerializeField] Vector2 move;
+        private float rotationSpeed = 20f;
+         Vector2 move;
 
-        [Header("Stats")]
-        private float acceleration = .5f;
-        private float attackMoveSpeedMultiplier = .1f;
-        private float sprintMultiplier = 1.5f;
-        private float maxSpeed = 6f;
+        [Header("Characteristics")]
+        [SerializeField] private float acceleration = .5f;
+        [SerializeField] private float sprintMultiplier = 1.5f;
+        [SerializeField] private float maxSpeed = 6f;
+        [SerializeField] private float attackMoveSpeedMultiplier = .2f;
 
+        [Header("Space")]
         [Header("Components")]
         [SerializeField] protected Rigidbody body;
         [SerializeField] protected Transform cameraContainer;

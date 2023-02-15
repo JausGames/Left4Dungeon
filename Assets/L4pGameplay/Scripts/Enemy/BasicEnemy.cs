@@ -58,7 +58,6 @@ namespace L4P.Gameplay.Enemy
                     break;
 
                 case StateType.MoveToTarget:
-
                     if ((controller.Destination - target.transform.position).sqrMagnitude > newDestinationRadius)
                     {
                         controller.Destination = target.transform.position;
@@ -113,27 +112,26 @@ namespace L4P.Gameplay.Enemy
         {
             base.TakeDamage(stats, direction);
 
-            if (fsm.currentState.type != StateType.Dead && direction.magnitude > 0f)
+            if (fsm.currentState.type != StateType.Dead && stats.knockback > 0f)
             {
                 //body.velocity = Vector3.zero;
-                controller.EnableAgent(false);
                 knockoutTime = Time.time + stats.knockTime;
+                controller.IsActive = false;
+                if(fsm.currentState.type != StateType.InAttack) animator.SetTrigger("GetHit");
                 fsm.currentState.type = StateType.KnockOut;
-                animator.SetTrigger("GetHit");
             }
         }
 
         public override void Die()
         {
+            base.Die();
+
             fsm.currentState.type = StateType.Dead;
             controller.Destination = transform.position;
             animator.SetTrigger("Die");
             deadTime = Time.time;
-            controller.EnableAgent(false);
+            controller.IsActive = false;
             GetComponent<Collider>().enabled = false;
-            body.velocity = Vector3.zero;
-            body.isKinematic = true;
-            body.useGravity = false;
             GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
             controller.enabled = false;
         }
@@ -146,11 +144,13 @@ namespace L4P.Gameplay.Enemy
                     target = CheckEnemy();
                     if (target != null)
                     {
+                        if (!controller.IsActive) controller.IsActive = true;
                         fsm.currentState.type = StateType.MoveToTarget;
                         controller.Destination = target.transform.position;
                     }
                     break;
                 case StateType.MoveToTarget:
+                    // :(
                     if ((transform.position - target.transform.position).sqrMagnitude <= checkForHitRadius)
                     {
                         fsm.currentState.type = StateType.HitTarget;
@@ -173,7 +173,7 @@ namespace L4P.Gameplay.Enemy
                     if(knockoutTime < Time.time)
                     {
                         fsm.currentState.type = StateType.CheckForTarget;
-                        controller.EnableAgent(true);
+                        controller.IsActive = true;
                     }
                     break;
                 default:

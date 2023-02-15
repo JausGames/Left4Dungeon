@@ -48,12 +48,14 @@ MonoBehaviour:
   leftAnimTriggerHash: -744885597
   rightAnimTriggerHash: 697749440
   stats:
-    damage: 10
+    damage: 30
     range: 10
-    cooldown: 2
-  stance: 0
+    cooldown: 0.1
+    knockback: 3.5
+    knockTime: 1
+  stance: 1
   owner: {fileID: 0}
-  trigger: {fileID: 0}
+  trigger: {fileID: 5071377590460313968}
 --- !u!1001 &5071377590477677027
 PrefabInstance:
   m_ObjectHideFlags: 0
