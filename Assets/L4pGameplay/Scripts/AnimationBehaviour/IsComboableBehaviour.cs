@@ -11,7 +11,7 @@ public class IsComboableBehaviour : StateMachineBehaviour
     {
         var controller = animator.GetComponentInParent<PlayerAnimatorController>();
         controller.SetCombo(false);
-        //controller.SetComboable(true);
+        controller.SetComboable(true);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -23,7 +23,7 @@ public class IsComboableBehaviour : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (animator.GetCurrentAnimatorClipInfo(0)[layerIndex].clip.name == clip.name) return;
+        if (animator.GetCurrentAnimatorClipInfo(layerIndex)[0].clip.name == clip.name) return;
         var controller = animator.GetComponentInParent<PlayerAnimatorController>();
         controller.SetComboable(false);
         controller.SetCombo(false);

@@ -35,7 +35,7 @@ namespace L4P.Gameplay.Enemy
             body = GetComponent<Rigidbody>();
             controller = GetComponent<AiController>();
             animator = GetComponentInChildren<Animator>();
-            controller.DestinationReachedOrUnreachable.AddListener(delegate { Debug.Log("BasicEnemy, Event : " + gameObject.name + " reached destination"); });
+            //controller.DestinationReachedOrUnreachable.AddListener(delegate { Debug.Log("BasicEnemy, Event : " + gameObject.name + " reached destination"); });
 
             animatorEvent = GetComponentInChildren<EnemyAnimatorEvent>();
             animatorEvent.IsNotAttackingEvent.AddListener(delegate { if (fsm.currentState.type == StateType.Dead) return; fsm.currentState.type = StateType.CheckForTarget; });
@@ -117,7 +117,7 @@ namespace L4P.Gameplay.Enemy
                 //body.velocity = Vector3.zero;
                 knockoutTime = Time.time + stats.knockTime;
                 controller.IsActive = false;
-                if(fsm.currentState.type != StateType.InAttack) animator.SetTrigger("GetHit");
+                if(fsm.currentState.type != StateType.InAttack && fsm.currentState.type != StateType.KnockOut) animator.SetTrigger("GetHit");
                 fsm.currentState.type = StateType.KnockOut;
             }
         }

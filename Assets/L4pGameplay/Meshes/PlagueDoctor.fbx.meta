@@ -231,6 +231,15 @@ ModelImporter:
   - first:
       74: 8410592391202393115
     second: plague_doctor_rig|standing die
+  - first:
+      74: 3431568776211251139
+    second: plague_doctor_rig|standing attack downward
+  - first:
+      74: 9092931536560846250
+    second: plague_doctor_rig|standing attack Mass strong attack
+  - first:
+      74: -520011519369480958
+    second: plague_doctor_rig|standing attack Mass weak attack
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -267,7 +276,14 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'plague_doctor_rig|standing die' has import
+    animationImportWarnings: "\nClip 'plague_doctor_rig|standing attack downward'
+      has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'UpLeg.L'
+      has scale animation that will be discarded.\n\nClip 'plague_doctor_rig|standing
+      attack Mass strong attack' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'UpLeg.L'
+      has scale animation that will be discarded.\n\t'UpLeg.R' has scale animation
+      that will be discarded.\n\nClip 'plague_doctor_rig|standing die' has import
       animation warnings that might lower retargeting quality:\nNote: Activate translation
       DOF on avatar to improve retargeting quality.\n\t'UpLeg.L' has scale animation
       that will be discarded.\n\t'UpLeg.R' has scale animation that will be discarded.\n\nClip
@@ -558,11 +574,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: plague_doctor_rig|standing L attack combot 3 hits
-      takeName: plague_doctor_rig|standing L attack combot 3 hits
+      name: plague_doctor_rig|standing attack Mass weak attack
+      takeName: plague_doctor_rig|standing attack Mass weak attack
       internalID: 0
       firstFrame: 0
-      lastFrame: 106
+      lastFrame: 32
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -573,7 +589,7 @@ ModelImporter:
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
-      loopBlendPositionXZ: 0
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1
@@ -582,43 +598,22 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.15047021
+      - time: 0.3427349
         functionName: OnActivateLeftHand
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.22770399
+      - time: 0.44380614
         functionName: OnDeactivateLeftHand
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.32637572
-        functionName: OnActivateLeftHand
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.3946869
-        functionName: OnDeactivateLeftHand
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.67172676
-        functionName: OnActivateLeftHand
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.7514231
-        functionName: OnDeactivateLeftHand
+      - time: 0.5865388
+        functionName: OnResetCombo
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
@@ -740,14 +735,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.049723763
-        functionName: OnIsComboable
+      - time: 0.07762667
+        functionName: OnResetCombo
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.16810793
+      - time: 0.18199682
         functionName: OnActivateRightHand
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
@@ -782,8 +777,15 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.66104376
+      - time: 0.608681
         functionName: OnActivateRightHand
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.65422714
+        functionName: OnResetCombo
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
@@ -791,13 +793,6 @@ ModelImporter:
         messageOptions: 0
       - time: 0.73430616
         functionName: OnDeactivateRightHand
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.7921582
-        functionName: OnResetCombo
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
         floatParameter: 0
@@ -861,6 +856,49 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: plague_doctor_rig|standing attack Mass strong attack
+      takeName: plague_doctor_rig|standing attack Mass strong attack
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.5844927
+        functionName: OnActivateRightHand
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.6888643
+        functionName: OnDeactivateRightHand
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 2e430e534fa7be444be4f741800fded2, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using L4P.Gameplay.Enemy;
 using L4P.Gameplay.Weapons;
+using System;
 
 public class WeaponTrigger : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class WeaponTrigger : MonoBehaviour
     [SerializeField] List<Hitable> touchedList;
     [SerializeField] List<ParticleSystem> particles;
     [SerializeField] bool isActive = false;
+
+    private float damageMultiplier = 1f;
+    private float knockbackMultiplier = 1f;
 
     public bool IsActive
     {
@@ -36,21 +40,14 @@ public class WeaponTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isActive) return;
-
-
-        if (other.GetComponent<Hitable>() || other.GetComponentInParent<Hitable>())
-        {
-            var victim = other.GetComponent<Hitable>() ? other.GetComponent<Hitable>() : other.GetComponentInParent<Hitable>();
-            if (victim == weapon.Owner || touchedList.Contains(victim)) return;
-
-            victim.TakeDamage(weapon.Stats, (victim.transform.position - weapon.Owner.transform.position).normalized);
-            touchedList.Add(victim);
-
-            Debug.Log("WeaponTrigger, OnTriggerEnter : hitable " + victim.gameObject);
-        }
+        TryHitCollider(other);
     }
     private void OnTriggerStay(Collider other)
+    {
+        TryHitCollider(other);
+    }
+
+    private void TryHitCollider(Collider other)
     {
         if (!isActive) return;
 
@@ -60,11 +57,22 @@ public class WeaponTrigger : MonoBehaviour
             var victim = other.GetComponent<Hitable>() ? other.GetComponent<Hitable>() : other.GetComponentInParent<Hitable>();
             if (victim == weapon.Owner || touchedList.Contains(victim)) return;
 
-            victim.TakeDamage(weapon.Stats, (victim.transform.position - weapon.Owner.transform.position).normalized);
+            var currStats = new WeaponStat(weapon.Stats);
+            currStats.damage *= damageMultiplier;
+            currStats.knockback *= knockbackMultiplier;
+
+            victim.TakeDamage(currStats, (victim.transform.position - weapon.Owner.transform.position).normalized);
             touchedList.Add(victim);
 
             Debug.Log("WeaponTrigger, OnTriggerStay : hitable " + victim.gameObject);
         }
+    }
+
+    internal void ChangeStatsMultiplier(float damageMultiplier, float knockdownMultiplier)
+    {
+        Debug.Log("WeaponTrigger, ChangeStatsMultiplier : damageMultiplier " + damageMultiplier);
+        this.damageMultiplier = damageMultiplier;
+        this.knockbackMultiplier = knockdownMultiplier;
     }
 
     public void ResetSwing()

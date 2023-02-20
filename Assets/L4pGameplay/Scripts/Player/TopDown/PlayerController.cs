@@ -17,7 +17,8 @@ namespace L4P.Gameplay.Player.TopDown
         [SerializeField] private float acceleration = .5f;
         [SerializeField] private float sprintMultiplier = 1.5f;
         [SerializeField] private float maxSpeed = 6f;
-        [SerializeField] private float attackMoveSpeedMultiplier = .2f;
+        [SerializeField] private float attackMoveSpeedMultiplier = .1f;
+        [SerializeField] private float mobileAttackMoveSpeedMultiplier = .5f;
 
         [Header("Space")]
         [Header("Components")]
@@ -26,6 +27,7 @@ namespace L4P.Gameplay.Player.TopDown
         [SerializeField] public PlayerAnimatorController animator;
         [SerializeField] public PlayerAnimatorEvent animatorEvent;
         private bool isAttacking;
+        private bool isMobileAttacking;
 
         public Vector2 Move { get => move; set => move = value; }
         public float Acceleration { get => acceleration; set => acceleration = value; }
@@ -41,7 +43,9 @@ namespace L4P.Gameplay.Player.TopDown
             animator = GetComponent<PlayerAnimatorController>(); 
             animatorEvent = GetComponentInChildren<PlayerAnimatorEvent>(); 
             animatorEvent.IsAttacking.AddListener(delegate { isAttacking = true; });
+            animatorEvent.IsMobileAttacking.AddListener(delegate { isMobileAttacking = true; });
             animatorEvent.IsNotAttacking.AddListener(delegate { isAttacking = false; });
+            animatorEvent.IsMobileNotAttacking.AddListener(delegate { isMobileAttacking = false; });
         }
         private void FixedUpdate()
         {
@@ -52,10 +56,12 @@ namespace L4P.Gameplay.Player.TopDown
 
         private void Animate()
         {
-            var direction = -cameraContainer.forward * move.x + cameraContainer.right * move.y;
+            //var direction = -cameraContainer.forward * move.x + cameraContainer.right * move.y;
+            var direction = body.velocity  / maxSpeed;
+            direction.y = 0f;
             var moveY = Vector3.Dot(direction, body.transform.forward);
             var moveX = Vector3.Dot(direction, body.transform.right);
-            animator.SetMove(new Vector2(moveX, moveY).normalized);
+            animator.SetMove(new Vector2(moveX, moveY));
         }
 
         public void UpdatePlayerPosition()
@@ -64,6 +70,10 @@ namespace L4P.Gameplay.Player.TopDown
             if (isAttacking)
             {
                 targetSpeed *= attackMoveSpeedMultiplier;
+            }
+            else if (isMobileAttacking)
+            {
+                targetSpeed *= mobileAttackMoveSpeedMultiplier;
             }
             else if (Sprinting)
             {
@@ -90,7 +100,7 @@ namespace L4P.Gameplay.Player.TopDown
             RaycastHit floorHit;
 
             var targetSpeed = rotationSpeed;
-            if (isAttacking)
+            if (isAttacking || isMobileAttacking)
             {
                 targetSpeed *= attackMoveSpeedMultiplier;
             }

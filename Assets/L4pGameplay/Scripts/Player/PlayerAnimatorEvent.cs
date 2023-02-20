@@ -8,7 +8,9 @@ namespace L4P.Gameplay.Player.Animations
     public class PlayerAnimatorEvent : MonoBehaviour
     {
         UnityEvent isAttacking = new UnityEvent();
+        UnityEvent isMobileAttacking = new UnityEvent();
         UnityEvent isNotAttacking = new UnityEvent();
+        UnityEvent isMobileNotAttacking = new UnityEvent();
 
         UnityEvent resetComboEvent = new UnityEvent();
 
@@ -28,7 +30,9 @@ namespace L4P.Gameplay.Player.Animations
         public UnityEvent RightActivateEvent { get => rightActivateEvent; }
         public UnityEvent RightDeactivateEvent { get => rightDeactivateEvent; }
         public UnityEvent IsAttacking { get => isAttacking; set => isAttacking = value; }
+        public UnityEvent IsMobileAttacking { get => isMobileAttacking; set => isMobileAttacking = value; }
         public UnityEvent IsNotAttacking { get => isNotAttacking; set => isNotAttacking = value; }
+        public UnityEvent IsMobileNotAttacking { get => isMobileNotAttacking; set => isMobileNotAttacking = value; }
         public UnityEvent RootMotionActivateEvent { get => rootMotionActivateEvent; set => rootMotionActivateEvent = value; }
         public UnityEvent RootMotionDeactivateEvent { get => rootMotionDeactivateEvent; set => rootMotionDeactivateEvent = value; }
         public UnityEvent ResetComboEvent { get => resetComboEvent; set => resetComboEvent = value; }
@@ -36,7 +40,9 @@ namespace L4P.Gameplay.Player.Animations
         public UnityEvent IsNotComboable { get => isNotComboable; set => isNotComboable = value; }
 
         public void OnIsAttacking() => IsAttacking.Invoke();
+        public void OnIsMobileAttacking() => IsMobileAttacking.Invoke();
         public void OnIsNotAttacking() => IsNotAttacking.Invoke();
+        public void OnIsMobileNotAttacking() => IsMobileNotAttacking.Invoke();
 
         public void OnResetCombo() => resetComboEvent.Invoke();
         public void OnIsComboable() => isComboable.Invoke();

@@ -14,7 +14,6 @@ public class ActivateRootMotionBehaviour : StateMachineBehaviour
         var animatorEvent = animator.GetComponent<PlayerAnimatorEvent>();
         controller.OnAnimationChange(clip, speed);
         controller.SetRootMotion(true);
-        animatorEvent.IsAttacking.Invoke();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -26,11 +25,10 @@ public class ActivateRootMotionBehaviour : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(animator.GetCurrentAnimatorClipInfo(0)[layerIndex].clip.name == clip.name) return;
+        if(animator.GetCurrentAnimatorClipInfo(layerIndex)[0].clip.name == clip.name) return;
         var controller = animator.GetComponentInParent<PlayerAnimatorController>();
         var animatorEvent = animator.GetComponent<PlayerAnimatorEvent>();
         controller.SetRootMotion(false);
-        animatorEvent.IsNotAttacking.Invoke();
 
 
     }

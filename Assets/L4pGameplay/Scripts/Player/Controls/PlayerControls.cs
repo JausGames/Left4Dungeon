@@ -62,6 +62,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KeyboardAlternative"",
+                    ""type"": ""Button"",
+                    ""id"": ""f495fb29-ff76-462e-a815-495d5a2722c9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""UseRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c2c7b47-d96b-43ea-a2b3-b9089b08db97"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""KeyboardAlternative"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -181,6 +201,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
         m_Gameplay_UseLeft = m_Gameplay.FindAction("UseLeft", throwIfNotFound: true);
         m_Gameplay_UseRight = m_Gameplay.FindAction("UseRight", throwIfNotFound: true);
+        m_Gameplay_KeyboardAlternative = m_Gameplay.FindAction("KeyboardAlternative", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -244,6 +265,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Sprint;
     private readonly InputAction m_Gameplay_UseLeft;
     private readonly InputAction m_Gameplay_UseRight;
+    private readonly InputAction m_Gameplay_KeyboardAlternative;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -252,6 +274,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Gameplay_Sprint;
         public InputAction @UseLeft => m_Wrapper.m_Gameplay_UseLeft;
         public InputAction @UseRight => m_Wrapper.m_Gameplay_UseRight;
+        public InputAction @KeyboardAlternative => m_Wrapper.m_Gameplay_KeyboardAlternative;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -273,6 +296,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @UseRight.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseRight;
                 @UseRight.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseRight;
                 @UseRight.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseRight;
+                @KeyboardAlternative.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnKeyboardAlternative;
+                @KeyboardAlternative.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnKeyboardAlternative;
+                @KeyboardAlternative.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnKeyboardAlternative;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -289,6 +315,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @UseRight.started += instance.OnUseRight;
                 @UseRight.performed += instance.OnUseRight;
                 @UseRight.canceled += instance.OnUseRight;
+                @KeyboardAlternative.started += instance.OnKeyboardAlternative;
+                @KeyboardAlternative.performed += instance.OnKeyboardAlternative;
+                @KeyboardAlternative.canceled += instance.OnKeyboardAlternative;
             }
         }
     }
@@ -308,5 +337,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnUseLeft(InputAction.CallbackContext context);
         void OnUseRight(InputAction.CallbackContext context);
+        void OnKeyboardAlternative(InputAction.CallbackContext context);
     }
 }

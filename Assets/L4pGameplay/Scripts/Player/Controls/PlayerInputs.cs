@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using L4P.Gameplay.Player;
 using static UnityEngine.InputSystem.InputAction;
+using L4P.Gameplay.Player.TopDown;
 
 namespace L4P.Gameplay.Player.Controls
 {
@@ -11,6 +12,8 @@ namespace L4P.Gameplay.Player.Controls
     {
         [SerializeField] IPlayerController motor = null;
         [SerializeField] IPlayerCombat combat = null;
+
+        [SerializeField] bool alternativeUse = false;
 
         public void Start()
         {
@@ -26,11 +29,17 @@ namespace L4P.Gameplay.Player.Controls
             InputManager.Controls.Gameplay.Sprint.performed += _ => OnSprint(true);
             InputManager.Controls.Gameplay.Sprint.canceled += _ => OnSprint(false);
 
-            InputManager.Controls.Gameplay.UseLeft.performed += _ => OnUseWeapon(true, false);
-            InputManager.Controls.Gameplay.UseLeft.canceled += _ => OnUseWeapon(false, false);
+            //InputManager.Controls.Gameplay.UseLeft.performed += _ => OnUseWeapon(true, alternativeUse ? AttackType.Alt : AttackType.Left);
+            //InputManager.Controls.Gameplay.UseLeft.canceled += _ => OnUseWeapon(false, alternativeUse ? AttackType.Alt : AttackType.Left);
 
-            InputManager.Controls.Gameplay.UseRight.performed += _ => OnUseWeapon(true, true);
-            InputManager.Controls.Gameplay.UseRight.canceled += _ => OnUseWeapon(false, true);
+            InputManager.Controls.Gameplay.UseLeft.performed += _ => OnUseWeapon(true, AttackType.Left);
+            InputManager.Controls.Gameplay.UseLeft.canceled += _ => OnUseWeapon(false, AttackType.Left);
+
+            InputManager.Controls.Gameplay.UseRight.performed += _ => OnUseWeapon(true, alternativeUse ? AttackType.Strong : AttackType.Right);
+            InputManager.Controls.Gameplay.UseRight.canceled += _ => OnUseWeapon(false, alternativeUse ? AttackType.Strong : AttackType.Right);
+
+            InputManager.Controls.Gameplay.KeyboardAlternative.performed += _ => alternativeUse = true;
+            InputManager.Controls.Gameplay.KeyboardAlternative.canceled += _ => alternativeUse = false;
         }
         public void OnMove(Vector2 context)
         {
@@ -44,13 +53,14 @@ namespace L4P.Gameplay.Player.Controls
             //if (motor == null || !IsOwner) return;
             motor.SetSprint(context);
         }
-        public void OnUseWeapon(bool context, bool isRightHand)
+        public void OnUseWeapon(bool context, AttackType type)
         {
+
             Debug.Log("caca : performed = " + context);
             //Debug.Log(gameObject.ToString() + ", Network Informations : IsLocalPlayer " + IsLocalPlayer);
             //if (motor == null || !IsOwner) return;
 
-            combat.UseWeapon(context, isRightHand);
+            combat.UseWeapon(context, type);
         }
     }
 }

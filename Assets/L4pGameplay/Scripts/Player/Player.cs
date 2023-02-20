@@ -25,6 +25,8 @@ namespace L4P.Gameplay.Player
             base.TakeDamage(stats, direction);
             animator.GetHit();
             healthUi.SetHealth(currentHealth);
+            var combat = GetComponent<PlayerCombat>();
+            combat.DeactivateTriggers();
         }
         public override void Die()
         {

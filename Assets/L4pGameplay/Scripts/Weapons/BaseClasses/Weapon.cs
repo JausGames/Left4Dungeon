@@ -25,6 +25,8 @@ namespace L4P.Gameplay.Weapons
         }
 
         public abstract void Use(bool performed, PlayerAnimatorController playerAnimator);
+        public abstract void UseWeak(bool performed, PlayerAnimatorController playerAnimator);
+        public abstract void UseStrong(bool performed, PlayerAnimatorController playerAnimator);
     }
 
     [System.Serializable]
@@ -35,6 +37,15 @@ namespace L4P.Gameplay.Weapons
         public float cooldown = .7f;
         public float knockback = 1f;
         public float knockTime = .5f;
+
+        public WeaponStat(WeaponStat stats)
+        {
+            this.damage = stats.damage;
+            this.range = stats.range;
+            this.cooldown = stats.cooldown;
+            this.knockback = stats.knockback;
+            this.knockTime = stats.knockTime;
+        }
     }
 
     public enum Stance

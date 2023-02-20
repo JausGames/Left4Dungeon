@@ -17,40 +17,79 @@ namespace L4P.Gameplay.Player.TopDown
         [SerializeField] private Weapon currentLeftHand;
         public Weapon CurrentLeftHand { get => currentLeftHand; }
 
-        private bool useLeftWeapon = false;
-        private bool useRightWeapon = false;
-        private bool isRightHand = true;
+        [SerializeField] private bool useLeftWeapon = false;
+        [SerializeField] private bool useRightWeapon = false;
+        [SerializeField] private AttackType currentRightAttack = AttackType.Right;
 
-        private bool isAttacking;
+        [SerializeField] private bool isAttacking;
 
-        public void UseWeapon(bool performed, bool isRightHand)
+        public void UseWeapon(bool performed, AttackType type)
         {
             if (animator.Comboable && performed) animator.SetCombo(true);
             else if (!isAttacking || !performed)
             {
-                this.isRightHand = isRightHand;
+                var isRightHand = type == AttackType.Left ? false : true;
+
                 if (isRightHand) useRightWeapon = performed;
                 else useLeftWeapon = performed;
-                Weapon weapon = isRightHand ? currentRightHand : currentLeftHand;
-                weapon.Use(performed, animator);
-                //animator.SetAttackAnimationTrigger(performed);
+
+                if (isRightHand) currentRightAttack = type;
+
+                //Weapon weapon = isRightHand ? currentRightHand : currentLeftHand;
+                //weapon.Use(performed, animator);
+
             }
         }
+
+        internal void DeactivateTriggers()
+        {
+            Debug.Log("DeactivateTriggers");
+            if (CurrentRightHand is MeleeWeapon rightWeapon)
+                rightWeapon.Trigger.IsActive = false;
+
+            if (CurrentLeftHand is MeleeWeapon leftWeapon)
+                leftWeapon.Trigger.IsActive = false;
+        }
+
         private void Update()
         {
+            if (animator.GetHit1) { DeactivateTriggers(); return; } ;
             if (useRightWeapon)
             {
                 if (currentRightHand.NextHit <= Time.time)
                 {
-                    currentRightHand.Use(true, animator);
+                    switch (currentRightAttack)
+                    {
+                        case AttackType.Right:
+                            currentRightHand.Use(true, animator);
+                            break;
+                        case AttackType.Left:
+                            break;
+                        case AttackType.Strong:
+                            currentRightHand.UseStrong(true, animator);
+                            break;
+                        case AttackType.Alt:
+                            break;
+                        default:
+                            break;
+                    }
                 }
+            }
+            else
+            {
+                currentRightHand.Use(false, animator);
+                currentRightHand.UseStrong(false, animator);
             }
             if(useLeftWeapon)
             {
-                if (!isRightHand && currentLeftHand.NextHit <= Time.time)
+                if (currentLeftHand.NextHit <= Time.time)
                 {
-                    currentLeftHand.Use(true, animator);
+                    currentLeftHand.UseWeak(true, animator);
                 }
+            }
+            else
+            {
+                currentLeftHand.UseWeak(false, animator);
             }
         }
         private void Awake()
@@ -60,14 +99,22 @@ namespace L4P.Gameplay.Player.TopDown
             animatorEvent = GetComponentInChildren<PlayerAnimatorEvent>();
 
             animatorEvent.IsAttacking.AddListener(delegate { isAttacking = true; });
+            animatorEvent.IsMobileAttacking.AddListener(delegate { isAttacking = true; });
             animatorEvent.IsNotAttacking.AddListener(delegate { isAttacking = false; });
+            animatorEvent.IsMobileNotAttacking.AddListener(delegate { isAttacking = false; });
 
             //if (currentLeftHand is MeleeWeapon)
-            animatorEvent.LeftActivateEvent.AddListener(delegate { ((MeleeWeapon)currentLeftHand).Trigger.IsActive = true; });
-            animatorEvent.LeftDeactivateEvent.AddListener(delegate { ((MeleeWeapon)currentLeftHand).Trigger.IsActive = false; });
-            animatorEvent.RightActivateEvent.AddListener(delegate { ((MeleeWeapon)currentRightHand).Trigger.IsActive = true; });
-            animatorEvent.RightDeactivateEvent.AddListener(delegate { ((MeleeWeapon)currentRightHand).Trigger.IsActive = false; });
+            animatorEvent.LeftActivateEvent.AddListener(delegate { if (animator.GetHit1) return; ((MeleeWeapon)currentLeftHand).Trigger.IsActive = true; });
+            animatorEvent.LeftDeactivateEvent.AddListener(delegate { if (animator.GetHit1) return; ((MeleeWeapon)currentLeftHand).Trigger.IsActive = false; });
+            animatorEvent.RightActivateEvent.AddListener(delegate { if (animator.GetHit1) return; ((MeleeWeapon)currentRightHand).Trigger.IsActive = true; });
+            animatorEvent.RightDeactivateEvent.AddListener(delegate { if (animator.GetHit1) return; ((MeleeWeapon)currentRightHand).Trigger.IsActive = false; });
             animatorEvent.ResetComboEvent.AddListener(delegate { animator.SetCombo(false); });
         }
+    }
+    public enum AttackType {
+        Right,
+        Left,
+        Strong,
+        Alt
     }
 }

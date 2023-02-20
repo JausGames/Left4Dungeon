@@ -17,13 +17,22 @@ namespace L4P.Gameplay.Player.Animations
         [SerializeField] AnimationCurve rootMotionCurve;
         [SerializeField] AnimationClipRootMotionData currentRootMotionData = new AnimationClipRootMotionData();
 
-        private float timeRoot;
         private Rigidbody body;
-        private float hitTime;
         private bool getHit;
+        private bool upperBodyLayerOn = false;
 
         public bool Comboable { get => comboable; set => comboable = value; }
         public bool Combo { get => animator.GetBool("Combo"); }
+        public bool GetHit1 { get => getHit; set
+            {
+
+                animator.SetBool("GetHit", value);
+                getHit = value;
+            }
+        }
+
+        public bool UpperBodyLayerOn { get => upperBodyLayerOn; set => upperBodyLayerOn = value; }
+
         internal void SetComboable(bool v)
         {
             Comboable = v;
@@ -59,6 +68,7 @@ namespace L4P.Gameplay.Player.Animations
             animatorEvent.IsNotComboable.AddListener(delegate { Comboable = false; });
 
 
+            Debug.Log("AnimHash : StrongR = " + Animator.StringToHash("StrongR"));
             Debug.Log("AnimHash : Attack = " + Animator.StringToHash("Attack"));
             Debug.Log("AnimHash : AttackL = " + Animator.StringToHash("AttackL"));
             Debug.Log("AnimHash : AttackR = " + Animator.StringToHash("AttackR"));
@@ -69,7 +79,6 @@ namespace L4P.Gameplay.Player.Animations
         public void SetRootMotion(bool value)
         {
             root = value;
-            timeRoot = Time.time;
         }
 
         private void Update()
@@ -82,13 +91,17 @@ namespace L4P.Gameplay.Player.Animations
 
                 Debug.Log("IsComboableBehaviour : currentTime = " + currentTime);
 
-                body.transform.position += body.transform.forward * (curve.Evaluate(currentTime * currentRootMotionData.length) - curve.Evaluate((currentTime * currentRootMotionData.length - Time.deltaTime)));
+                body.transform.position += currentRootMotionData.speed * body.transform.forward * (curve.Evaluate(currentTime * currentRootMotionData.length) - curve.Evaluate((currentTime * currentRootMotionData.length - Time.deltaTime)));
             }
-
-            if(getHit && hitTime + 1f > Time.time)
+            
+            if(upperBodyLayerOn || GetHit1)
             {
                 ManageBooleanLayer(true, 1);
             }
+            /*else if (GetHit1 && hitTime + 1f <= Time.time)
+            {
+                GetHit1 = false;
+            }*/
             else if(isAttacking)
             {
                 if (animator.GetLayerWeight(1) > 0f) ManageBooleanLayer(false, 1);
@@ -165,6 +178,7 @@ namespace L4P.Gameplay.Player.Animations
 
         internal void SetAttackAnimationBool(bool performed, bool isRight ,int animAttackBoolId = 1080829965)
         {
+            if (GetHit1) return;
             if (isRight) castR = performed;
             else castL = performed;
 
@@ -173,12 +187,13 @@ namespace L4P.Gameplay.Player.Animations
 
         public void SetAttackAnimationTrigger(bool performed, int animAttackTriggerId = 1080829965)
         {
+            if (GetHit1) return;
             /*if (Comboable && performed)
             {
                 animator.SetBool("Combo", true);
             }*/
             //else 
-            if(performed && !isAttacking)
+            if (performed && !isAttacking)
             {
                 if (performed)
                     animator.SetTrigger(animAttackTriggerId);
@@ -188,9 +203,8 @@ namespace L4P.Gameplay.Player.Animations
         }
         internal void GetHit()
         {
-            animator.SetTrigger("GetHit");
-            hitTime = Time.time;
-            getHit = true;
+            GetHit1 = true;
+            animator.SetBool("Combo", false);
         }
     }
 

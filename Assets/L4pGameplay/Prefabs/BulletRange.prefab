@@ -107,7 +107,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445115080193932524}
   m_LocalRotation: {x: 0.70309854, y: 0.07518242, z: -0.07518238, w: 0.70309865}
-  m_LocalPosition: {x: -0.156, y: -0.072, z: 0.062}
+  m_LocalPosition: {x: 0.151, y: -0.052, z: 0.002}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5019,7 +5019,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3549385065842748844}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.176, y: 0.45, z: 0}
+  m_LocalPosition: {x: 0.088, y: 0.178, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5163,6 +5163,8 @@ MonoBehaviour:
     damage: 50
     range: 10
     cooldown: 0.7
+    knockback: 1
+    knockTime: 0.5
   stance: 0
   owner: {fileID: 0}
   ennemyLayer:
