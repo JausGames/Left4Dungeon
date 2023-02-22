@@ -22,8 +22,9 @@ namespace L4P.Gameplay.Player
         }
         public override void TakeDamage(WeaponStat stats, Vector3 direction)
         {
+            Debug.Log("Take damage");
             base.TakeDamage(stats, direction);
-            animator.GetHit();
+            animator.GetHit = true;
             healthUi.SetHealth(currentHealth);
             var combat = GetComponent<PlayerCombat>();
             combat.DeactivateTriggers();

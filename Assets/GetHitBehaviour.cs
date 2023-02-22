@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class GetHitBehaviour : StateMachineBehaviour
 {
+    private PlayerAnimatorController controller;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        var controller = animator.GetComponentInParent<PlayerAnimatorController>();
-        controller.GetHit1 = true;
-        controller.Comboable = false;
+        /*if(!controller) controller = animator.GetComponentInParent<PlayerAnimatorController>();
+        controller.GetHit = true;
+        controller.Comboable = false;*/
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -22,9 +24,9 @@ public class GetHitBehaviour : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        var controller = animator.GetComponentInParent<PlayerAnimatorController>();
-        controller.GetHit1 = false;
-        controller.Comboable = false;
+        if (!controller) controller = animator.GetComponentInParent<PlayerAnimatorController>();
+        controller.GetHit = false;
+        //controller.Comboable = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

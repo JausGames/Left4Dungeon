@@ -61,6 +61,7 @@ namespace L4P.Gameplay.Enemy
                     if ((controller.Destination - target.transform.position).sqrMagnitude > newDestinationRadius)
                     {
                         controller.Destination = target.transform.position;
+                        //controller.Destination = target.transform.position + target.Body.velocity * ((controller.Destination - target.transform.position).sqrMagnitude / controller.Speed);
                     }
                     break;
 
@@ -154,6 +155,7 @@ namespace L4P.Gameplay.Enemy
                     if ((transform.position - target.transform.position).sqrMagnitude <= checkForHitRadius)
                     {
                         fsm.currentState.type = StateType.HitTarget;
+                        controller.Destination = transform.position;
                     }
                     break;
                 case StateType.HitTarget:
