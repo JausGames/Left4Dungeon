@@ -71,7 +71,7 @@ namespace L4P.Gameplay.Player.Controls
                             || animator.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("run")
                         ) && !animator.Animator.GetCurrentAnimatorClipInfo(1)[0].clip.name.Contains("hit reaction");
                     },
-                    Time.time)
+                    .2f)
                 );
         }
         public void OnUseWeapon(bool context, AttackType type)
@@ -102,7 +102,7 @@ namespace L4P.Gameplay.Player.Controls
                             )
                         ) && !animator.Animator.GetCurrentAnimatorClipInfo(1)[0].clip.name.Contains("hit reaction");
                     },
-                    Time.time)
+                    .2f)
                 );
         }
 
@@ -134,11 +134,11 @@ namespace L4P.Gameplay.Player.Controls
         public static float TimeBeforeActionsExpire = .5f;
 
         //Constructor
-        public ActionItem(InputAction ia, Action action, Func<ActionItem, bool> checkTransition, float stamp)
+        public ActionItem(InputAction ia, Action action, Func<ActionItem, bool> checkTransition, float maxDelay)
         {
             actionType = ia;
             this.action = action;
-            Timestamp = stamp;
+            Timestamp = Time.time + maxDelay;
             checkTransitionAction = checkTransition;
         }
 
