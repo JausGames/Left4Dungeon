@@ -12,10 +12,32 @@ namespace L4P.Gameplay.Player.TopDown
         PlayerAnimatorEvent animatorEvent;
 
         [SerializeField] private Weapon currentRightHand;
-        public Weapon CurrentRightHand { get => currentRightHand; }
+        [SerializeField] private Transform rightHand;
+        public Weapon CurrentRightHand 
+        { 
+            get => currentRightHand;
+            set
+            {
+                var oldWeapon = currentRightHand;
+                var newWeapon = ((GameObject)Instantiate(value.Prefab, rightHand)).GetComponent<Weapon>();
+                currentRightHand = newWeapon;
+                Destroy(oldWeapon.gameObject);
+            }
+        }
 
         [SerializeField] private Weapon currentLeftHand;
-        public Weapon CurrentLeftHand { get => currentLeftHand; }
+        [SerializeField] private Transform leftHand;
+        public Weapon CurrentLeftHand
+        {
+            get => currentLeftHand;
+            set
+            {
+                var oldWeapon = currentLeftHand;
+                var newWeapon = ((GameObject)Instantiate(value.Prefab, leftHand)).GetComponent<Weapon>();
+                currentLeftHand = newWeapon;
+                Destroy(oldWeapon.gameObject);
+            }
+        }
 
         [SerializeField] private bool useLeftWeapon = false;
         [SerializeField] private bool useRightWeapon = false;
