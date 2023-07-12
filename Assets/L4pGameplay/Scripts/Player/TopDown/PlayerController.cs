@@ -20,14 +20,17 @@ namespace L4P.Gameplay.Player.TopDown
         [SerializeField] private float attackMoveSpeedMultiplier = .1f;
         [SerializeField] private float mobileAttackMoveSpeedMultiplier = .5f;
 
+        [SerializeField] private float sprintingSince = 0f;
         [Header("Space")]
         [Header("Components")]
         [SerializeField] protected Rigidbody body;
         [SerializeField] protected Transform cameraContainer;
         [SerializeField] public PlayerAnimatorController animator;
         [SerializeField] public PlayerAnimatorEvent animatorEvent;
-        private bool isAttacking;
-        private bool isMobileAttacking;
+        private bool isAttacking = false;
+        private bool isMobileAttacking = false;
+        [SerializeField] private bool startRoll = false;
+        [SerializeField] private bool rolling = false;
 
         public Vector2 Move { get => move; set => move = value; }
         public float Acceleration { get => acceleration; set => acceleration = value; }
@@ -46,11 +49,36 @@ namespace L4P.Gameplay.Player.TopDown
             animatorEvent.IsMobileAttacking.AddListener(delegate { isMobileAttacking = true; });
             animatorEvent.IsNotAttacking.AddListener(delegate { isAttacking = false; });
             animatorEvent.IsMobileNotAttacking.AddListener(delegate { isMobileAttacking = false; });
+            animatorEvent.StopRolling.AddListener(delegate { rolling = false; });
         }
         private void FixedUpdate()
         {
-            UpdatePlayerPosition();
-            Turning();
+            if (!rolling && !startRoll)
+            {
+
+                UpdatePlayerPosition();
+                var speed = rotationSpeed;
+                if (isAttacking || isMobileAttacking)
+                {
+                    speed *= attackMoveSpeedMultiplier;
+                }
+
+                Turning(RotateToMouse(), speed);
+            }
+            else
+            {
+                if (startRoll)
+                {
+                    rolling = true;
+                    animator.Roll();
+                    Turning(RotateToMoveDir(), Mathf.Infinity);
+                    startRoll = false;
+                }
+
+                Vector3 rootMotion = GetCustomRootMotionValue();
+                body.velocity = rootMotion;
+
+            }
             Animate();
         }
 
@@ -67,6 +95,7 @@ namespace L4P.Gameplay.Player.TopDown
         public void UpdatePlayerPosition()
         {
             var targetSpeed = maxSpeed;
+            
             if (isAttacking)
             {
                 targetSpeed *= attackMoveSpeedMultiplier;
@@ -79,31 +108,41 @@ namespace L4P.Gameplay.Player.TopDown
             {
                 targetSpeed *= sprintMultiplier;
             }
-            var direction = -cameraContainer.forward * move.x + cameraContainer.right * move.y;
-            var directionLength = direction.magnitude;
+            var direction = (-cameraContainer.forward * move.x + cameraContainer.right * move.y);
+            direction.Normalize();
+
+            /*var directionLength = direction.magnitude;
             if (directionLength > 1)
             {
                 direction /= directionLength;
-            }
+            }*/
 
             var currentSpeed = body.velocity.magnitude;
             var desiredSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration);
 
-            body.velocity = direction * desiredSpeed;
+            Vector3 rootMotion = GetCustomRootMotionValue();
+            body.velocity = direction * desiredSpeed + rootMotion;
         }
-        void Turning()
+
+        private Vector3 GetCustomRootMotionValue()
+        {
+            return animator.GetZRootMotionVelocity() * transform.forward;
+        }
+
+        void Turning(Quaternion quat, float speed)
+        {
+
+
+            // Set the player's rotation to this new rotation.
+            body.transform.rotation = Quaternion.RotateTowards(body.transform.rotation, quat, speed);
+        }
+        Quaternion RotateToMouse()
         {
             // Create a ray from the mouse cursor on screen in the direction of the camera.
             Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             // Create a RaycastHit variable to store information about what was hit by the ray.
             RaycastHit floorHit;
-
-            var targetSpeed = rotationSpeed;
-            if (isAttacking || isMobileAttacking)
-            {
-                targetSpeed *= attackMoveSpeedMultiplier;
-            }
 
             // Perform the raycast and if it hits something on the floor layer...
             if (Physics.Raycast(camRay, out floorHit))
@@ -117,10 +156,22 @@ namespace L4P.Gameplay.Player.TopDown
                 // Create a quaternion (rotation) based on looking down the vector from the player to the mouse.
                 Quaternion newRotatation = Quaternion.LookRotation(playerToMouse);
 
-                // Set the player's rotation to this new rotation.
-                body.transform.rotation = Quaternion.RotateTowards(body.transform.rotation, newRotatation, targetSpeed);
-                //playerRigidbody.MoveRotation (newRotatation);
+                return newRotatation;
             }
+            else
+                return Quaternion.identity;
+        }
+        Quaternion RotateToMoveDir()
+        {
+            var dir = move == Vector2.zero ? new Vector2(transform.forward.x, transform.forward.z) : move;
+            var direction = (-cameraContainer.forward * dir.x + cameraContainer.right * dir.y);
+            direction.Normalize();
+
+            // Create a quaternion (rotation) based on looking down the vector from the player to the mouse.
+            Quaternion newRotatation = Quaternion.LookRotation(direction, Vector3.up);
+
+            return newRotatation;
+            
         }
 
         public void SetMove(Vector2 move)
@@ -128,9 +179,17 @@ namespace L4P.Gameplay.Player.TopDown
             this.move = move;
         }
 
-        public void SetSprint(bool sprinting)
+        public void SetSprintOrDodge(bool performed)
         {
-            this.sprinting = sprinting;
+            if(performed)
+            {
+                sprintingSince = Time.time;
+            }
+            else if(Time.time - sprintingSince < 0.3f)
+            {
+                this.startRoll = true;
+            }
+            this.sprinting = performed;
         }
     }
 }

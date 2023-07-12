@@ -1009,7 +1009,14 @@ MonoBehaviour:
     cooldown: 0.7
     knockback: 1
     knockTime: 0.5
+    attackAnimation: {fileID: 0}
+    strongAnimation: {fileID: 0}
+    weakAnimation: {fileID: 0}
+    leftAnimation: {fileID: 0}
   stance: 1
+  timeBetweenAnimationCycles: 0.1
+  maxAttackRange: 2
+  damage: 10
   owner: {fileID: 1705482137}
   trigger: {fileID: 38610290}
 --- !u!114 &38610290
@@ -5420,7 +5427,14 @@ MonoBehaviour:
     cooldown: 0.7
     knockback: 1
     knockTime: 0.5
+    attackAnimation: {fileID: 0}
+    strongAnimation: {fileID: 0}
+    weakAnimation: {fileID: 0}
+    leftAnimation: {fileID: 0}
   stance: 1
+  timeBetweenAnimationCycles: 0.1
+  maxAttackRange: 2
+  damage: 10
   owner: {fileID: 1067244259}
   trigger: {fileID: 108935332}
 --- !u!114 &108935332
@@ -12205,7 +12219,7 @@ Animator:
   m_GameObject: {fileID: 373462284}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4bf66dd6544171e44aae0bca81b9d209, type: 3}
-  m_Controller: {fileID: 9100000, guid: b81ad69ac650c2a4c9636dd934ff055f, type: 2}
+  m_Controller: {fileID: 22100000, guid: 8db54674a64d9654da4964a69ef61187, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -14304,7 +14318,14 @@ MonoBehaviour:
     cooldown: 0.7
     knockback: 1
     knockTime: 0.5
+    attackAnimation: {fileID: 0}
+    strongAnimation: {fileID: 0}
+    weakAnimation: {fileID: 0}
+    leftAnimation: {fileID: 0}
   stance: 1
+  timeBetweenAnimationCycles: 0.1
+  maxAttackRange: 2
+  damage: 10
   owner: {fileID: 388307048}
   trigger: {fileID: 569157040}
 --- !u!114 &569157040
@@ -16375,7 +16396,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 212706788}
+    m_TransformParent: {fileID: 1243904067}
     m_Modifications:
     - target: {fileID: 5071377590460313968, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: particles.Array.size
@@ -16403,27 +16424,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5071377590616949923, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.0064150095
       objectReference: {fileID: 0}
     - target: {fileID: 5071377590616949923, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.0037209722
       objectReference: {fileID: 0}
     - target: {fileID: 5071377590616949923, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5071377590616949923, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.000000089406946
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5071377590616949923, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000089406946
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5071377590616949923, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000053495155
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5071377590616949923, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -16431,7 +16452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5071377590616949923, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 5071377590616949923, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -16443,7 +16464,7 @@ PrefabInstance:
       objectReference: {fileID: 1572907203}
     - target: {fileID: 5071377590616949924, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: stance
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5071377590616949924, guid: 06b201aed9ad71a438a83e69066d5232, type: 3}
       propertyPath: stats.knockback
@@ -16484,7 +16505,14 @@ MonoBehaviour:
     cooldown: 0.7
     knockback: 1
     knockTime: 0.5
+    attackAnimation: {fileID: 0}
+    strongAnimation: {fileID: 0}
+    weakAnimation: {fileID: 0}
+    leftAnimation: {fileID: 0}
   stance: 1
+  timeBetweenAnimationCycles: 0.1
+  maxAttackRange: 2
+  damage: 10
   owner: {fileID: 1828866253}
   trigger: {fileID: 793292589}
 --- !u!114 &793292589
@@ -16522,7 +16550,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 2110245632}
+    m_TransformParent: {fileID: 212706788}
     m_Modifications:
     - target: {fileID: 441768478173442467, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -16538,35 +16566,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5907093339275436367, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5907093339275436367, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.13
       objectReference: {fileID: 0}
     - target: {fileID: 5907093339275436367, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.021778464
       objectReference: {fileID: 0}
     - target: {fileID: 5907093339275436367, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 5907093339275436367, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.499998
+      value: 0.9958765
       objectReference: {fileID: 0}
     - target: {fileID: 5907093339275436367, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5000024
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5907093339275436367, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.49999762
+      value: -0.09071945
       objectReference: {fileID: 0}
     - target: {fileID: 5907093339275436367, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.500002
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5907093339275436367, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -16574,7 +16602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5907093339275436367, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -10.41
       objectReference: {fileID: 0}
     - target: {fileID: 5907093339275436367, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -16586,7 +16614,7 @@ PrefabInstance:
       objectReference: {fileID: 1572907203}
     - target: {fileID: 9058135046118059450, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: stance
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9058135046118059450, guid: 986cc9f4212f6994fa5d0dfa53f267eb, type: 3}
       propertyPath: stats.damage
@@ -22739,7 +22767,14 @@ MonoBehaviour:
     cooldown: 0.7
     knockback: 1
     knockTime: 0.5
+    attackAnimation: {fileID: 0}
+    strongAnimation: {fileID: 0}
+    weakAnimation: {fileID: 0}
+    leftAnimation: {fileID: 0}
   stance: 1
+  timeBetweenAnimationCycles: 0.1
+  maxAttackRange: 2
+  damage: 10
   owner: {fileID: 1164823599}
   trigger: {fileID: 994862945}
 --- !u!114 &994862945
@@ -24865,6 +24900,11 @@ MonoBehaviour:
   affectsNavigation: 0
   userData: -1
   externallyManaged: 0
+--- !u!4 &1243904067 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1393154686885801409, guid: 4bf66dd6544171e44aae0bca81b9d209, type: 3}
+  m_PrefabInstance: {fileID: 373462282}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1281399293
 GameObject:
   m_ObjectHideFlags: 0
@@ -24982,7 +25022,14 @@ MonoBehaviour:
     cooldown: 0.7
     knockback: 1
     knockTime: 0.5
+    attackAnimation: {fileID: 0}
+    strongAnimation: {fileID: 0}
+    weakAnimation: {fileID: 0}
+    leftAnimation: {fileID: 0}
   stance: 1
+  timeBetweenAnimationCycles: 0.1
+  maxAttackRange: 2
+  damage: 10
   owner: {fileID: 2116086975}
   trigger: {fileID: 1368324276}
 --- !u!114 &1368324276
@@ -27827,10 +27874,13 @@ MonoBehaviour:
   maxSpeed: 6
   attackMoveSpeedMultiplier: 0.2
   mobileAttackMoveSpeedMultiplier: 0.5
+  sprintingSince: 0
   body: {fileID: 0}
   cameraContainer: {fileID: 567258000}
   animator: {fileID: 0}
   animatorEvent: {fileID: 373462288}
+  startRoll: 0
+  rolling: 0
 --- !u!114 &1572907201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27843,8 +27893,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0acc16b91fc1af64e9c9fddc2a55f417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRightHand: {fileID: 1324190206}
-  currentLeftHand: {fileID: 1587230139}
+  currentRightHand: {fileID: 1587230139}
+  currentLeftHand: {fileID: 1324190206}
   useLeftWeapon: 0
   useRightWeapon: 0
   currentRightAttack: 0
@@ -29423,7 +29473,14 @@ MonoBehaviour:
     cooldown: 0.7
     knockback: 1
     knockTime: 0.5
+    attackAnimation: {fileID: 0}
+    strongAnimation: {fileID: 0}
+    weakAnimation: {fileID: 0}
+    leftAnimation: {fileID: 0}
   stance: 1
+  timeBetweenAnimationCycles: 0.1
+  maxAttackRange: 2
+  damage: 10
   owner: {fileID: 947313142}
   trigger: {fileID: 1759969802}
 --- !u!1001 &1790868951
@@ -29948,7 +30005,14 @@ MonoBehaviour:
     cooldown: 0.7
     knockback: 1
     knockTime: 0.5
+    attackAnimation: {fileID: 0}
+    strongAnimation: {fileID: 0}
+    weakAnimation: {fileID: 0}
+    leftAnimation: {fileID: 0}
   stance: 1
+  timeBetweenAnimationCycles: 0.1
+  maxAttackRange: 2
+  damage: 10
   owner: {fileID: 1552507366}
   trigger: {fileID: 1837897610}
 --- !u!114 &1837897610
@@ -30485,7 +30549,14 @@ MonoBehaviour:
     cooldown: 0.7
     knockback: 1
     knockTime: 0.5
+    attackAnimation: {fileID: 0}
+    strongAnimation: {fileID: 0}
+    weakAnimation: {fileID: 0}
+    leftAnimation: {fileID: 0}
   stance: 1
+  timeBetweenAnimationCycles: 0.1
+  maxAttackRange: 2
+  damage: 10
   owner: {fileID: 688309207}
   trigger: {fileID: 1918981609}
 --- !u!114 &1918981609
@@ -31303,7 +31374,14 @@ MonoBehaviour:
     cooldown: 0.7
     knockback: 1
     knockTime: 0.5
+    attackAnimation: {fileID: 0}
+    strongAnimation: {fileID: 0}
+    weakAnimation: {fileID: 0}
+    leftAnimation: {fileID: 0}
   stance: 1
+  timeBetweenAnimationCycles: 0.1
+  maxAttackRange: 2
+  damage: 10
   owner: {fileID: 798931180}
   trigger: {fileID: 2097837153}
 --- !u!114 &2097837153
@@ -31368,11 +31446,6 @@ Transform:
   m_Father: {fileID: 947313142}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &2110245632 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7561937270166647961, guid: 4bf66dd6544171e44aae0bca81b9d209, type: 3}
-  m_PrefabInstance: {fileID: 373462282}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2112361975 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1693546492923637869, guid: 483f8a553e2fff142ae23b2d1f1fb26d, type: 3}
@@ -31398,7 +31471,14 @@ MonoBehaviour:
     cooldown: 0.7
     knockback: 1
     knockTime: 0.5
+    attackAnimation: {fileID: 0}
+    strongAnimation: {fileID: 0}
+    weakAnimation: {fileID: 0}
+    leftAnimation: {fileID: 0}
   stance: 1
+  timeBetweenAnimationCycles: 0.1
+  maxAttackRange: 2
+  damage: 10
   owner: {fileID: 895506243}
   trigger: {fileID: 2112361977}
 --- !u!114 &2112361977

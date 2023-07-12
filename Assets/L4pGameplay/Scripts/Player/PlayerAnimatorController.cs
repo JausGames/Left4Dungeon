@@ -30,6 +30,7 @@ namespace L4P.Gameplay.Player.Animations
                 getHit = value;
             }
         }
+        
 
         public bool UpperBodyLayerOn { get => upperBodyLayerOn; set => upperBodyLayerOn = value; }
 
@@ -66,6 +67,8 @@ namespace L4P.Gameplay.Player.Animations
 
             animatorEvent.IsComboable.AddListener(delegate { Comboable = true; });
             animatorEvent.IsNotComboable.AddListener(delegate { Comboable = false; });
+
+            animatorEvent.StopComboEvent.AddListener(delegate { if (!Combo) animator.SetTrigger("StopCombo"); });
 
 
             Debug.Log("AnimHash : StrongR = " + Animator.StringToHash("StrongR"));
@@ -116,6 +119,11 @@ namespace L4P.Gameplay.Player.Animations
             }
 
             SetMovementAnimation();
+        }
+
+        internal void Roll()
+        {
+            animator.SetTrigger("Roll");
         }
 
         private void SetMovementAnimation()
@@ -205,6 +213,11 @@ namespace L4P.Gameplay.Player.Animations
         {
             GetHit1 = true;
             animator.SetBool("Combo", false);
+        }
+
+        internal float GetZRootMotionVelocity()
+        {
+            return animator.GetFloat("Zvelocity");
         }
     }
 

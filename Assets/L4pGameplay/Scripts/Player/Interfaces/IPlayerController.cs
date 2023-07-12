@@ -23,6 +23,6 @@ namespace L4P.Gameplay.Player
         public void UpdatePlayerPosition();
 
         public void SetMove(Vector2 move);
-        public void SetSprint(bool sprinting);
+        public void SetSprintOrDodge(bool performed);
     }
 }

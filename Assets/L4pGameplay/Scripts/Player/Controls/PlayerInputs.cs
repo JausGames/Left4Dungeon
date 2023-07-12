@@ -51,7 +51,7 @@ namespace L4P.Gameplay.Player.Controls
         {
             //Debug.Log(gameObject.ToString() + ", Network Informations : IsLocalPlayer " + IsLocalPlayer);
             //if (motor == null || !IsOwner) return;
-            motor.SetSprint(context);
+            motor.SetSprintOrDodge(context);
         }
         public void OnUseWeapon(bool context, AttackType type)
         {

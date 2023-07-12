@@ -13,6 +13,7 @@ namespace L4P.Gameplay.Player.Animations
         UnityEvent isMobileNotAttacking = new UnityEvent();
 
         UnityEvent resetComboEvent = new UnityEvent();
+        UnityEvent stopComboEvent = new UnityEvent();
 
         UnityEvent isComboable = new UnityEvent();
         UnityEvent isNotComboable = new UnityEvent();
@@ -24,6 +25,7 @@ namespace L4P.Gameplay.Player.Animations
 
         UnityEvent rootMotionActivateEvent = new UnityEvent();
         UnityEvent rootMotionDeactivateEvent = new UnityEvent();
+        UnityEvent stopRolling = new UnityEvent();
 
         public UnityEvent LeftActivateEvent { get => leftActivateEvent; }
         public UnityEvent LeftDeactivateEvent { get => leftDeactivateEvent; }
@@ -36,8 +38,10 @@ namespace L4P.Gameplay.Player.Animations
         public UnityEvent RootMotionActivateEvent { get => rootMotionActivateEvent; set => rootMotionActivateEvent = value; }
         public UnityEvent RootMotionDeactivateEvent { get => rootMotionDeactivateEvent; set => rootMotionDeactivateEvent = value; }
         public UnityEvent ResetComboEvent { get => resetComboEvent; set => resetComboEvent = value; }
+        public UnityEvent StopComboEvent { get => stopComboEvent; set => stopComboEvent = value; }
         public UnityEvent IsComboable { get => isComboable; set => isComboable = value; }
         public UnityEvent IsNotComboable { get => isNotComboable; set => isNotComboable = value; }
+        public UnityEvent StopRolling { get => stopRolling; set => stopRolling = value; }
 
         public void OnIsAttacking() => IsAttacking.Invoke();
         public void OnIsMobileAttacking() => IsMobileAttacking.Invoke();
@@ -45,6 +49,8 @@ namespace L4P.Gameplay.Player.Animations
         public void OnIsMobileNotAttacking() => IsMobileNotAttacking.Invoke();
 
         public void OnResetCombo() => resetComboEvent.Invoke();
+        public void OnStopCombo() => stopComboEvent.Invoke();
+
         public void OnIsComboable() => isComboable.Invoke();
         public void OnIsNotComboable() => IsNotComboable.Invoke();
 
@@ -55,5 +61,6 @@ namespace L4P.Gameplay.Player.Animations
 
         public void OnActivateRootMotion() => RootMotionActivateEvent.Invoke();
         public void OnDeactivateRootMotion() => RootMotionDeactivateEvent.Invoke();
+        public void OnStopRolling() => StopRolling.Invoke();
     }
 }

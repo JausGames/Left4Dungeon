@@ -12,8 +12,13 @@ namespace L4P.Gameplay.Weapons
         [SerializeField] protected Stance stance;
 
 
+        [SerializeField] float timeBetweenAnimationCycles = .1f;
+        [SerializeField] float maxAttackRange = 2f;
+        [SerializeField] float damage = 10f;
 
-        public WeaponStat Stats { get => stats; }
+
+
+    public WeaponStat Stats { get => stats; }
 
         float nextHit = 0f;
         [SerializeField] protected Transform owner;
@@ -38,6 +43,12 @@ namespace L4P.Gameplay.Weapons
         public float knockback = 1f;
         public float knockTime = .5f;
 
+        public AnimationClip attackAnimation;
+        public AnimationClip strongAnimation;
+        public AnimationClip weakAnimation;
+        public AnimationClip leftAnimation;
+
+        //Only used in weapon trigger to deal damage and add multiplier (no need for animations data now)
         public WeaponStat(WeaponStat stats)
         {
             this.damage = stats.damage;
