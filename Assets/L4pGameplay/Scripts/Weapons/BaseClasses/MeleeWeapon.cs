@@ -24,7 +24,7 @@ namespace L4P.Gameplay.Weapons
                 playerAnimator.SetCombo(performed);
             }
 
-            else if (!playerAnimator.GetHit1 && performed)
+            else if (!playerAnimator.GetHit && performed)
             {
                 trigger.ChangeStatsMultiplier(1f, 1f);
                 Debug.Log("MeleeWeapon, Use : SetAttackAnimationTrigger");
@@ -43,7 +43,7 @@ namespace L4P.Gameplay.Weapons
                 playerAnimator.SetCombo(performed);
             }
 
-            else if (!playerAnimator.GetHit1 && performed)
+            else if (!playerAnimator.GetHit && performed)
             {
                 Debug.Log("MeleeWeapon, Use : SetAttackAnimationTrigger");
                 playerAnimator.SetAttackAnimationTrigger(performed, leftAnimTriggerHash);

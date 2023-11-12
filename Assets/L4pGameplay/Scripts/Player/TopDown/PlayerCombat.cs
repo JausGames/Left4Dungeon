@@ -12,10 +12,32 @@ namespace L4P.Gameplay.Player.TopDown
         PlayerAnimatorEvent animatorEvent;
 
         [SerializeField] private Weapon currentRightHand;
-        public Weapon CurrentRightHand { get => currentRightHand; }
+        [SerializeField] private Transform rightHand;
+        public Weapon CurrentRightHand 
+        { 
+            get => currentRightHand;
+            set
+            {
+                var oldWeapon = currentRightHand;
+                var newWeapon = ((GameObject)Instantiate(value.Prefab, rightHand)).GetComponent<Weapon>();
+                currentRightHand = newWeapon;
+                Destroy(oldWeapon.gameObject);
+            }
+        }
 
         [SerializeField] private Weapon currentLeftHand;
-        public Weapon CurrentLeftHand { get => currentLeftHand; }
+        [SerializeField] private Transform leftHand;
+        public Weapon CurrentLeftHand
+        {
+            get => currentLeftHand;
+            set
+            {
+                var oldWeapon = currentLeftHand;
+                var newWeapon = ((GameObject)Instantiate(value.Prefab, leftHand)).GetComponent<Weapon>();
+                currentLeftHand = newWeapon;
+                Destroy(oldWeapon.gameObject);
+            }
+        }
 
         [SerializeField] private bool useLeftWeapon = false;
         [SerializeField] private bool useRightWeapon = false;
@@ -53,7 +75,7 @@ namespace L4P.Gameplay.Player.TopDown
 
         private void Update()
         {
-            if (animator.GetHit1) { DeactivateTriggers(); return; } ;
+            if (animator.GetHit) { DeactivateTriggers(); return; } ;
             if (useRightWeapon)
             {
                 if (currentRightHand.NextHit <= Time.time)
@@ -104,10 +126,10 @@ namespace L4P.Gameplay.Player.TopDown
             animatorEvent.IsMobileNotAttacking.AddListener(delegate { isAttacking = false; });
 
             //if (currentLeftHand is MeleeWeapon)
-            animatorEvent.LeftActivateEvent.AddListener(delegate { if (animator.GetHit1) return; ((MeleeWeapon)currentLeftHand).Trigger.IsActive = true; });
-            animatorEvent.LeftDeactivateEvent.AddListener(delegate { if (animator.GetHit1) return; ((MeleeWeapon)currentLeftHand).Trigger.IsActive = false; });
-            animatorEvent.RightActivateEvent.AddListener(delegate { if (animator.GetHit1) return; ((MeleeWeapon)currentRightHand).Trigger.IsActive = true; });
-            animatorEvent.RightDeactivateEvent.AddListener(delegate { if (animator.GetHit1) return; ((MeleeWeapon)currentRightHand).Trigger.IsActive = false; });
+            animatorEvent.LeftActivateEvent.AddListener(delegate { if (animator.GetHit) return; ((MeleeWeapon)currentLeftHand).Trigger.IsActive = true; });
+            animatorEvent.LeftDeactivateEvent.AddListener(delegate { if (animator.GetHit) return; ((MeleeWeapon)currentLeftHand).Trigger.IsActive = false; });
+            animatorEvent.RightActivateEvent.AddListener(delegate { if (animator.GetHit) return; ((MeleeWeapon)currentRightHand).Trigger.IsActive = true; });
+            animatorEvent.RightDeactivateEvent.AddListener(delegate { if (animator.GetHit) return; ((MeleeWeapon)currentRightHand).Trigger.IsActive = false; });
             animatorEvent.ResetComboEvent.AddListener(delegate { animator.SetCombo(false); });
         }
     }

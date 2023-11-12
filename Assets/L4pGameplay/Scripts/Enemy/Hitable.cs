@@ -16,6 +16,8 @@ namespace L4P.Gameplay.Enemy
 
         protected Rigidbody body;
 
+        public Rigidbody Body { get => body; }
+
         // Update player health
         virtual public void TakeDamage(WeaponStat stats, Vector3 direction)
         {

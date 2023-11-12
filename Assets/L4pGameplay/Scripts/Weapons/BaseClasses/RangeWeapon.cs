@@ -14,7 +14,7 @@ namespace L4P.Gameplay.Weapons
         public override void Use(bool performed, PlayerAnimatorController playerAnimator)
         {
             //do it with hash
-            playerAnimator.SetAttackAnimationBool(performed, stance == Stance.Right, stance == Stance.Left ? leftAnimTriggerHash : rightAnimTriggerHash);
+            playerAnimator.SetAttackAnimationBool(performed, true, rightAnimTriggerHash);
             if (performed && NextHit <= Time.time)
             {
                 NextHit = Time.time + stats.cooldown;
@@ -25,7 +25,7 @@ namespace L4P.Gameplay.Weapons
         public override void UseWeak(bool performed, PlayerAnimatorController playerAnimator)
         {
             //do it with hash
-            playerAnimator.SetAttackAnimationBool(performed, stance == Stance.Right, stance == Stance.Left ? leftAnimTriggerHash : rightAnimTriggerHash);
+            playerAnimator.SetAttackAnimationBool(performed, false, leftAnimTriggerHash);
             if (performed && NextHit <= Time.time)
             {
                 NextHit = Time.time + stats.cooldown;
@@ -36,7 +36,7 @@ namespace L4P.Gameplay.Weapons
         public override void UseStrong(bool performed, PlayerAnimatorController playerAnimator)
         {
             //do it with hash
-            playerAnimator.SetAttackAnimationBool(performed, stance == Stance.Right, stance == Stance.Left ? leftAnimTriggerHash : rightAnimTriggerHash);
+            playerAnimator.SetAttackAnimationBool(performed, true, rightAnimTriggerHash);
             if (performed && NextHit <= Time.time)
             {
                 NextHit = Time.time + stats.cooldown;

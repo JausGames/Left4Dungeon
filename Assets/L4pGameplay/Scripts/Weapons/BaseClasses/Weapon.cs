@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using L4P.Gameplay.Player.Animations;
+using UnityEngine.UI;
 
 namespace L4P.Gameplay.Weapons
 {
@@ -9,7 +10,7 @@ namespace L4P.Gameplay.Weapons
         [SerializeField] protected int leftAnimTriggerHash;
         [SerializeField] protected int rightAnimTriggerHash;
         [SerializeField] protected WeaponStat stats = null;
-        [SerializeField] protected Stance stance;
+        [SerializeField] protected new string name = null;
 
 
         [SerializeField] float timeBetweenAnimationCycles = .1f;
@@ -22,8 +23,14 @@ namespace L4P.Gameplay.Weapons
 
         float nextHit = 0f;
         [SerializeField] protected Transform owner;
+        [SerializeField] internal Sprite sprite;
+
         public float NextHit { get => nextHit; set => nextHit = value; }
         public Transform Owner { get => owner; set => owner = value; }
+
+        //Load a Sprite (Assets/Resources/Sprites/sprite01.png)
+        internal GameObject Prefab { get => Resources.Load<GameObject>("Weapons/" + name); }
+
         private void Awake()
         {
             Owner = GetComponentInParent<Animator>().transform;

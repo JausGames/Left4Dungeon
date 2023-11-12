@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivateUpperLayer : StateMachineBehaviour
+public class ActivateUpperLayerBehaviour : StateMachineBehaviour
 {
     [SerializeField] AnimationClip clip;
 

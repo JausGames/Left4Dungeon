@@ -23,9 +23,11 @@ namespace L4P.Gameplay.Player.Animations
 
         public bool Comboable { get => comboable; set => comboable = value; }
         public bool Combo { get => animator.GetBool("Combo"); }
-        public bool GetHit1 { get => getHit; set
+        public bool GetHit { get => getHit; set
             {
 
+                Debug.Log("PlayerAnimatorController, GetHit : value = " + value);
+                if (value) animator.SetBool("Combo", false);
                 animator.SetBool("GetHit", value);
                 getHit = value;
             }
@@ -33,6 +35,7 @@ namespace L4P.Gameplay.Player.Animations
         
 
         public bool UpperBodyLayerOn { get => upperBodyLayerOn; set => upperBodyLayerOn = value; }
+        public Animator Animator { get => animator; set => animator = value; }
 
         internal void SetComboable(bool v)
         {
@@ -41,7 +44,6 @@ namespace L4P.Gameplay.Player.Animations
 
         internal void SetCombo(bool v)
         {
-            Debug.Log("PlayerAnimatorController : combo = " + v);
             if (v && !Comboable) return;
             animator.SetBool("Combo", v);
         }
@@ -97,13 +99,13 @@ namespace L4P.Gameplay.Player.Animations
                 body.transform.position += currentRootMotionData.speed * body.transform.forward * (curve.Evaluate(currentTime * currentRootMotionData.length) - curve.Evaluate((currentTime * currentRootMotionData.length - Time.deltaTime)));
             }
             
-            if(upperBodyLayerOn || GetHit1)
+            if(upperBodyLayerOn || GetHit)
             {
                 ManageBooleanLayer(true, 1);
             }
-            /*else if (GetHit1 && hitTime + 1f <= Time.time)
+            /*else if (GetHit && hitTime + 1f <= Time.time)
             {
-                GetHit1 = false;
+                GetHit = false;
             }*/
             else if(isAttacking)
             {
@@ -186,7 +188,7 @@ namespace L4P.Gameplay.Player.Animations
 
         internal void SetAttackAnimationBool(bool performed, bool isRight ,int animAttackBoolId = 1080829965)
         {
-            if (GetHit1) return;
+            if (GetHit) return;
             if (isRight) castR = performed;
             else castL = performed;
 
@@ -195,7 +197,7 @@ namespace L4P.Gameplay.Player.Animations
 
         public void SetAttackAnimationTrigger(bool performed, int animAttackTriggerId = 1080829965)
         {
-            if (GetHit1) return;
+            if (GetHit) return;
             /*if (Comboable && performed)
             {
                 animator.SetBool("Combo", true);
@@ -209,6 +211,7 @@ namespace L4P.Gameplay.Player.Animations
                     animator.ResetTrigger(animAttackTriggerId);
             }
         }
+<<<<<<< HEAD
         internal void GetHit()
         {
             GetHit1 = true;
@@ -219,6 +222,8 @@ namespace L4P.Gameplay.Player.Animations
         {
             return animator.GetFloat("Zvelocity");
         }
+=======
+>>>>>>> 385c628d913c5780a726b25a33d3d5bd4e71aa3a
     }
 
     class AnimationClipRootMotionData
